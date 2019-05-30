@@ -13,17 +13,21 @@ import javafx.stage.Stage;
 
 public class Yale2048 extends Application {
     public void start (Stage ps) {
+        HBox hb = new HBox();
+
         BorderPane background = new BorderPane();
 
         BorderPane gameBorder = new BorderPane();
         gameBorder.setStyle("-fx-background-color: #bbada0");
 
-        HBox hb = new HBox();
         GridPane board = new GridPane();
-        gameBorder.getChildren().add(board);
         board.setStyle("-fx-background-color: #cdc1b4");
 
+        gameBorder.getChildren().add(board);
+        gameBorder.setCenter(board);
 
+
+        // Top
         GridPane scoreAndText = new GridPane();
         VBox scorePane = new VBox();
         VBox bestScorePane = new VBox();
@@ -69,6 +73,10 @@ public class Yale2048 extends Application {
         hb.getChildren().addAll(text, scoreAndText);
         hb.setSpacing(300);
         background.setStyle("-fx-background-color: #F2E2D2");
+
+
+
+        // Center
 
         board.setHgap(5);
         board.setVgap(5);
