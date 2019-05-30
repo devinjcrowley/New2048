@@ -1,8 +1,11 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -10,45 +13,70 @@ public class Devin2048 extends Application {
 
     @Override
     public void start(Stage ps) {
-
-        // Establishing the background of the game.
         BorderPane background = new BorderPane();
-        background.setStyle("-fx-background-color: #faf8ef");
 
+        BorderPane gameBorder = new BorderPane();
+        gameBorder.setStyle("-fx-background-color: #bbada0");
 
-//        //Setting up the top bar of the game.
-//        HBox topBar = new HBox();
-//        GridPane topBarSplit = new GridPane(); //For splitting the name and scores.
-//
-//        Pane name = new Pane(); //For "2048" at the top of the screen.
-//        topBarSplit.add(name, 0, 0);
-//
-//        GridPane scoresSplit = new GridPane(); //Splitting scores.
-//        topBarSplit.add(scoresSplit, 1, 0);
-//
-//        Pane score = new Pane();
-//        Pane bestScore = new Pane();
-//        scoresSplit.add(score, 0, 0);
-//        scoresSplit.add(bestScore, 1, 0);
-//
-//        topBar.getChildren().add(topBarSplit);
-//
-//        background.setTop(topBar);
-
-        //Setting up the board of the game.
-        BorderPane gameBoarder = new BorderPane();
-        gameBoarder.setStyle("-fx-background-color: #bbada0");
-
+        HBox hb = new HBox();
         GridPane board = new GridPane();
-        board.setVgap(10);
-        board.setHgap(10);
+        gameBorder.getChildren().add(board);
         board.setStyle("-fx-background-color: #cdc1b4");
 
-        
 
-        gameBoarder.setCenter(board);
+        GridPane scoreAndText = new GridPane();
+        VBox scorePane = new VBox();
+        VBox bestScorePane = new VBox();
 
-        background.getChildren().add(gameBoarder);
+        Text text = new Text("2048");
+        text.setFont(Font.font("Calibri", 50));
+        text.setFill(Color.web("#776e65"));
+
+        Text score = new Text("Score");
+        score.setFont(Font.font("Calibri", 30));
+        score.setFill(Color.web("#eee4da"));
+
+        Text scoreText = new Text("0");
+        scoreText.setFont(Font.font("Calibri", 30));
+        scoreText.setFill(Color.web("#ffffff"));
+
+        scoreAndText.add(scorePane, 0, 0);
+        scoreAndText.add(bestScorePane, 1, 0);
+        scoreAndText.setHgap(20);
+
+        scorePane.setPrefHeight(50);
+        scorePane.setPrefWidth(75);
+        scorePane.getChildren().add(score);
+        scorePane.getChildren().add(scoreText);
+        scorePane.setAlignment(Pos.CENTER);
+        scorePane.setStyle("-fx-background-color: #bbada0");
+
+        Text bestScore = new Text("Best");
+        bestScore.setFont(Font.font("Calibri", 30));
+        bestScore.setFill(Color.web("#eee4da"));
+
+        Text bestScoreText = new Text("0");
+        bestScoreText.setFont(Font.font("Calibri", 30));
+        bestScoreText.setFill(Color.web("#ffffff"));
+
+        bestScorePane.setPrefWidth(75);
+        bestScorePane.setPrefHeight(50);
+        bestScorePane.getChildren().add(bestScore);
+        bestScorePane.getChildren().add(bestScoreText);
+        bestScorePane.setAlignment(Pos.CENTER);
+        bestScorePane.setStyle("-fx-background-color: #bbada0");
+
+        hb.getChildren().addAll(text, scoreAndText);
+        hb.setSpacing(300);
+        background.setStyle("-fx-background-color: #F2E2D2");
+
+        Rectangle test = new Rectangle(30, 0);
+
+        board.setHgap(5);
+        board.setVgap(5);
+
+        background.setCenter(gameBorder);
+        background.setTop(hb);
 
         Scene scene = new Scene(background, 500, 500);
         ps.setTitle("Devin 2048");
