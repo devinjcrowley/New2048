@@ -48,6 +48,7 @@ public class Emma2048 extends Application {
         board.setHgap(10);
         board.setStyle("-fx-background-color: #cdc1b4");
 
+
                     //Done on 5/30/19:
         //instruction header text:
         Text insHead = new Text( "HOW TO PLAY: ");
