@@ -71,7 +71,6 @@ public class Yale2048 extends Application {
         bp.setCenter(pane);
         bp.setTop(hb);
 
-
         Scene scene = new Scene(bp, 600, 400);
         ps.setScene(scene);
         ps.show();
