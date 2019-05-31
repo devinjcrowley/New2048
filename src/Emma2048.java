@@ -24,7 +24,6 @@ public class Emma2048 extends Application {
         gameBorder.getChildren().add(board);
         board.setStyle("-fx-background-color: #cdc1b4");
 
-
         GridPane scoreAndText = new GridPane();
         VBox scorePane = new VBox();
         VBox bestScorePane = new VBox();
