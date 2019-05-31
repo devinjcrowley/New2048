@@ -129,39 +129,40 @@ public class Emma2048 extends Application {
                 r.setPrefHeight(79);
                 r.setPrefWidth(79);
                 //stuff to change color based on the number hahahahhhahahhhahha
-//                if(r.getAccessibleText().equals("2")) {
-//                    r.setStyle("-fx-background-color:#d6d4d3");
-//                }
-//                else if(r.getAccessibleText().equals("4")){
-//                    r.setStyle("-fx-background-color:#e6ceb3");
-//                }
-//                else if(r.getAccessibleText().equals("8")){
-//                    r.setStyle("-fx-background-color:#e8a67e");
-//                }
-//                else if(r.getAccessibleText().equals("16")){
-//                    r.setStyle("-fx-background-color:#e88a4b");
-//                }
-//                else if(r.getAccessibleText().equals("32")){
-//                    r.setStyle("-fx-background-color:#ff7a65");
-//                }
-//                else if(r.getAccessibleText().equals("64")){
-//                    r.setStyle("-fx-background-color:#eb4e2f");
-//                }
-//                else if(r.getAccessibleText().equals("128")){
-//                    r.setStyle("-fx-background-color:#f0df73");
-//                }
-//                else if(r.getAccessibleText().equals("256")){
-//                    r.setStyle("-fx-background-color:#f0df48");
-//                }
-//                else if(r.getAccessibleText().equals("512")){
-//                    r.setStyle("-fx-background-color:#f2cf09");
-//                }
-//                else if(r.getAccessibleText().equals("1024")){
-//                    r.setStyle("-fx-background-color:#ffee6b");
-//                }
-//                else if(r.getAccessibleText().equals("2048")){
-//                    r.setStyle("-fx-background-color:#fff587");
-//                }
+                r.setAccessibleText("");
+                if(r.getAccessibleText().equals("2")) {
+                    r.setStyle("-fx-background-color:#d6d4d3");
+                }
+                else if(r.getAccessibleText().equals("4")){
+                    r.setStyle("-fx-background-color:#e6ceb3");
+                }
+                else if(r.getAccessibleText().equals("8")){
+                    r.setStyle("-fx-background-color:#e8a67e");
+                }
+                else if(r.getAccessibleText().equals("16")){
+                    r.setStyle("-fx-background-color:#e88a4b");
+                }
+                else if(r.getAccessibleText().equals("32")){
+                    r.setStyle("-fx-background-color:#ff7a65");
+                }
+                else if(r.getAccessibleText().equals("64")){
+                    r.setStyle("-fx-background-color:#eb4e2f");
+                }
+                else if(r.getAccessibleText().equals("128")){
+                    r.setStyle("-fx-background-color:#f0df73");
+                }
+                else if(r.getAccessibleText().equals("256")){
+                    r.setStyle("-fx-background-color:#f0df48");
+                }
+                else if(r.getAccessibleText().equals("512")){
+                    r.setStyle("-fx-background-color:#f2cf09");
+                }
+                else if(r.getAccessibleText().equals("1024")){
+                    r.setStyle("-fx-background-color:#ffee6b");
+                }
+                else if(r.getAccessibleText().equals("2048")){
+                    r.setStyle("-fx-background-color:#fff587");
+                }
 
                 board.add(r, row, column);
             }
