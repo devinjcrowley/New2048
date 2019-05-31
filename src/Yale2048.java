@@ -20,7 +20,7 @@ public class Yale2048 extends Application {
         gameBorder.setStyle("-fx-background-color: #bbada0");
 
         GridPane board = new GridPane();
-        board.setStyle("-fx-background-color: #cdc1b4");
+        board.setStyle("-fx-background-color: #bbada0");
 
         gameBorder.setCenter(board);
 
@@ -35,7 +35,7 @@ public class Yale2048 extends Application {
         VBox bestScorePane = new VBox();
 
         Text text = new Text("2048");
-        text.setFont(Font.font("Calibri", 80));
+        text.setFont(Font.font("Calibri", FontWeight.BOLD, 80));
         text.setFill(Color.web("#776e65"));
 
         Text score = new Text("Score");
@@ -48,7 +48,7 @@ public class Yale2048 extends Application {
 
         scoreAndBest.add(scorePane, 0, 0);
         scoreAndBest.add(bestScorePane, 1, 0);
-        scoreAndBest.setHgap(40);
+        scoreAndBest.setHgap(20);
         scoreAndBest.setVgap(50);
 
         scorePane.setPrefHeight(50);
@@ -106,15 +106,28 @@ public class Yale2048 extends Application {
         // Sides
         VBox side1 = new VBox();
         VBox side2 = new VBox();
-        side1.setPrefWidth(50);
-        side2.setPrefWidth(50);
+        side1.setPrefWidth(134);
+        side2.setPrefWidth(134);
 
         // Center
 
         board.setHgap(5);
         board.setVgap(5);
 
-        background.setCenter(gameBorder);
+
+
+        background.setCenter(board);
+
+        for (int row=0; row<4; row++) {
+            for (int column = 0; column < 4; column++) {
+                Rectangle r = new Rectangle();
+                r.setFill(Color.web("#cdc1b4"));
+                r.setHeight(79);
+                r.setWidth(79);
+                board.add(r, row, column);
+            }
+        }
+
         background.setTop(hb);
         background.setBottom(i);
         background.setLeft(side1);
@@ -123,6 +136,7 @@ public class Yale2048 extends Application {
 
         background.setStyle("-fx-background-color: #F2E2D2");
         Scene scene = new Scene(background, 600, 500);
+        ps.setTitle("Yale2048");
         ps.setScene(scene);
         ps.show();
     }
