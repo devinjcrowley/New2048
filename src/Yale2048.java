@@ -17,11 +17,9 @@ public class Yale2048 extends Application {
         BorderPane background = new BorderPane();
 
         BorderPane gameBorder = new BorderPane();
-        gameBorder.setPrefSize(50, 100);
         gameBorder.setStyle("-fx-background-color: #bbada0");
 
         GridPane board = new GridPane();
-        board.setPrefSize(90, 90);
         board.setStyle("-fx-background-color: #cdc1b4");
 
         gameBorder.setCenter(board);
@@ -29,14 +27,15 @@ public class Yale2048 extends Application {
 
         // Top
         HBox hb = new HBox();
-        hb.setSpacing(500);
+        hb.setPrefHeight(100);
+        hb.setSpacing(200);
         hb.setAlignment(Pos.CENTER);
         GridPane scoreAndBest = new GridPane();
         VBox scorePane = new VBox();
         VBox bestScorePane = new VBox();
 
         Text text = new Text("2048");
-        text.setFont(Font.font("Calibri", 50));
+        text.setFont(Font.font("Calibri", 80));
         text.setFill(Color.web("#776e65"));
 
         Text score = new Text("Score");
@@ -49,7 +48,8 @@ public class Yale2048 extends Application {
 
         scoreAndBest.add(scorePane, 0, 0);
         scoreAndBest.add(bestScorePane, 1, 0);
-        scoreAndBest.setHgap(20);
+        scoreAndBest.setHgap(40);
+        scoreAndBest.setVgap(50);
 
         scorePane.setPrefHeight(50);
         scorePane.setPrefWidth(75);
@@ -122,7 +122,7 @@ public class Yale2048 extends Application {
 
 
         background.setStyle("-fx-background-color: #F2E2D2");
-        Scene scene = new Scene(background, 1000, 600);
+        Scene scene = new Scene(background, 600, 500);
         ps.setScene(scene);
         ps.show();
     }
