@@ -23,7 +23,6 @@ public class Yale2048 extends Application {
         GridPane board = new GridPane();
         board.setStyle("-fx-background-color: #cdc1b4");
 
-        gameBorder.getChildren().add(board);
         gameBorder.setCenter(board);
 
 
