@@ -1,7 +1,9 @@
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -10,26 +12,33 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Emma2048 extends Application {
+import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
-    @Override
-    public void start(Stage ps) {
+
+public class Emma2048 extends Application {
+    public void start (Stage ps) {
         BorderPane background = new BorderPane();
 
         BorderPane gameBorder = new BorderPane();
         gameBorder.setStyle("-fx-background-color: #bbada0");
 
-        HBox hb = new HBox();
         GridPane board = new GridPane();
-        gameBorder.getChildren().add(board);
-        board.setStyle("-fx-background-color: #cdc1b4");
+        board.setStyle("-fx-background-color: #bbada0");
 
-        GridPane scoreAndText = new GridPane();
+        gameBorder.setCenter(board);
+
+
+        // Top
+        HBox hb = new HBox();
+        hb.setPrefHeight(100);
+        hb.setSpacing(200);
+        hb.setAlignment(Pos.CENTER);
+        GridPane scoreAndBest = new GridPane();
         VBox scorePane = new VBox();
         VBox bestScorePane = new VBox();
 
         Text text = new Text("2048");
-        text.setFont(Font.font("Calibri", FontWeight.BOLD, 50));
+        text.setFont(Font.font("Calibri", FontWeight.BOLD, 80));
         text.setFill(Color.web("#776e65"));
 
         Text score = new Text("Score");
@@ -40,9 +49,10 @@ public class Emma2048 extends Application {
         scoreText.setFont(Font.font("Calibri", 30));
         scoreText.setFill(Color.web("#ffffff"));
 
-        scoreAndText.add(scorePane, 0, 0);
-        scoreAndText.add(bestScorePane, 1, 0);
-        scoreAndText.setHgap(20);
+        scoreAndBest.add(scorePane, 0, 0);
+        scoreAndBest.add(bestScorePane, 1, 0);
+        scoreAndBest.setHgap(20);
+        scoreAndBest.setVgap(50);
 
         scorePane.setPrefHeight(50);
         scorePane.setPrefWidth(75);
@@ -66,18 +76,14 @@ public class Emma2048 extends Application {
         bestScorePane.setAlignment(Pos.CENTER);
         bestScorePane.setStyle("-fx-background-color: #bbada0");
 
-        hb.getChildren().addAll(text, scoreAndText);
-        hb.setSpacing(300);
-        background.setStyle("-fx-background-color: #F2E2D2");
+        hb.getChildren().addAll(text, scoreAndBest);
 
-        Rectangle test = new Rectangle(30, 0);
-
+        // Bottom
         Pane i = new Pane();
         i.prefHeightProperty().bind(board.heightProperty().add(60));
         i.prefWidthProperty().bind(background.widthProperty());
         background.setBottom(i);
-        //Done on 5/30/19:
-//instruction header text:
+        //instruction header text:
         Text insHead = new Text( "HOW TO PLAY: ");
         insHead.setFont(Font.font ("Calibri", FontWeight.BOLD, 20));
         insHead.setFill(Color.web("#776e65"));
@@ -100,15 +106,47 @@ public class Emma2048 extends Application {
         inst2.yProperty().bind(i.heightProperty().subtract(15));
         i.getChildren().addAll(insHead, inst1, inst2);
 
+        // Sides
+        VBox side1 = new VBox();
+        VBox side2 = new VBox();
+        side1.setPrefWidth(134);
+        side2.setPrefWidth(134);
+
+        // Center
 
         board.setHgap(5);
         board.setVgap(5);
 
-        background.setCenter(gameBorder);
-        background.setTop(hb);
 
-        Scene scene = new Scene(background, 570, 500);
-        ps.setTitle("Emma 2048");
+
+        background.setCenter(board);
+
+        for (int row=0; row<4; row++) {
+            for (int column = 0; column < 4; column++) {
+                Pane r = new Pane();
+                r.setStyle(("-fx-background-color:#cdc1b4"));
+                r.setPrefHeight(79);
+                r.setPrefWidth(79);
+                board.add(r, row, column);
+            }
+        }
+//        r.setAccessibleText("2");
+//        if(r.getAccessibleText().equals("2")){
+//            r.setStyle("-fx-background-color:#d6d4d3");
+//        }
+
+
+
+
+        background.setTop(hb);
+        background.setBottom(i);
+        background.setLeft(side1);
+        background.setRight(side2);
+
+
+        background.setStyle("-fx-background-color: #F2E2D2");
+        Scene scene = new Scene(background, 600, 500);
+        ps.setTitle("Emma2048");
         ps.setScene(scene);
         ps.show();
     }
