@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -16,20 +17,14 @@ public class Yale2048 extends Application {
     public void start (Stage ps) {
         BorderPane background = new BorderPane();
 
-        BorderPane gameBorder = new BorderPane();
-        gameBorder.setStyle("-fx-background-color: #bbada0");
-
         GridPane board = new GridPane();
         board.setStyle("-fx-background-color: #bbada0");
 
-        gameBorder.setCenter(board);
-
-
         // Top
-        HBox hb = new HBox();
-        hb.setPrefHeight(100);
-        hb.setSpacing(200);
-        hb.setAlignment(Pos.CENTER);
+        HBox topBar = new HBox();
+        topBar.setPrefHeight(100);
+        topBar.setSpacing(200);
+        topBar.setAlignment(Pos.CENTER);
         GridPane scoreAndBest = new GridPane();
         VBox scorePane = new VBox();
         VBox bestScorePane = new VBox();
@@ -73,7 +68,7 @@ public class Yale2048 extends Application {
         bestScorePane.setAlignment(Pos.CENTER);
         bestScorePane.setStyle("-fx-background-color: #bbada0");
 
-        hb.getChildren().addAll(text, scoreAndBest);
+        topBar.getChildren().addAll(text, scoreAndBest);
 
         // Bottom
         Pane i = new Pane();
@@ -106,21 +101,24 @@ public class Yale2048 extends Application {
         // Sides
         VBox side1 = new VBox();
         VBox side2 = new VBox();
-        side1.setPrefWidth(134);
-        side2.setPrefWidth(134);
+        side1.setPrefWidth(131.5);
+        side2.setPrefWidth(131.5);
 
         // Center
+        // This is a color: 776e65
+
 
         board.setHgap(5);
         board.setVgap(5);
-
-
+        board.setPadding(new Insets(5, 5, 5, 5));
 
         background.setCenter(board);
 
         for (int row=0; row<4; row++) {
             for (int column = 0; column < 4; column++) {
                 Rectangle r = new Rectangle();
+                r.setArcHeight(10);
+                r.setArcWidth(10);
                 r.setFill(Color.web("#cdc1b4"));
                 r.setHeight(79);
                 r.setWidth(79);
@@ -128,7 +126,25 @@ public class Yale2048 extends Application {
             }
         }
 
-        background.setTop(hb);
+        for (int j = 0; j < 2; j++) {
+            Rectangle r2 = new Rectangle();
+            r2.setArcHeight(10);
+            r2.setArcWidth(10);
+            r2.setFill(Color.web("#eee4da"));
+            r2.setHeight(79);
+            r2.setWidth(79);
+            Text t2 = new Text("2");
+            t2.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+            t2.setFill(Color.web("#776e65"));
+            int row = (int)(Math.random()*4);
+            int column = (int)(int)(Math.random()*4);
+            StackPane s2 = new StackPane();
+            s2.getChildren().addAll(r2, t2);
+            
+            board.add(s2, row, column);
+        }
+
+        background.setTop(topBar);
         background.setBottom(i);
         background.setLeft(side1);
         background.setRight(side2);
@@ -140,4 +156,6 @@ public class Yale2048 extends Application {
         ps.setScene(scene);
         ps.show();
     }
+
+
 }
