@@ -30,10 +30,10 @@ public class Emma2048 extends Application {
 
 
         // Top
-        HBox hb = new HBox();
-        hb.setPrefHeight(100);
-        hb.setSpacing(200);
-        hb.setAlignment(Pos.CENTER);
+        HBox topBar = new HBox();
+        topBar.setPrefHeight(100);
+        topBar.setSpacing(200);
+        topBar.setAlignment(Pos.CENTER);
         GridPane scoreAndBest = new GridPane();
         VBox scorePane = new VBox();
         VBox bestScorePane = new VBox();
@@ -77,7 +77,7 @@ public class Emma2048 extends Application {
         bestScorePane.setAlignment(Pos.CENTER);
         bestScorePane.setStyle("-fx-background-color: #bbada0");
 
-        hb.getChildren().addAll(text, scoreAndBest);
+        topBar.getChildren().addAll(text, scoreAndBest);
 
         // Bottom
         Pane i = new Pane();
@@ -130,42 +130,6 @@ public class Emma2048 extends Application {
                 r.setPrefWidth(79);
                 //stuff to change color based on the number hahahahhhahahhhahha
                 r.setAccessibleText("");
-                if(r.getAccessibleText().equals("")) {
-                    r.setStyle(("-fx-background-color:#cdc1b4"));
-                }
-                else if(r.getAccessibleText().equals("2")) {
-                    r.setStyle("-fx-background-color:#d6d4d3");
-                }
-                else if(r.getAccessibleText().equals("4")){
-                    r.setStyle("-fx-background-color:#e6ceb3");
-                }
-                else if(r.getAccessibleText().equals("8")){
-                    r.setStyle("-fx-background-color:#e8a67e");
-                }
-                else if(r.getAccessibleText().equals("16")){
-                    r.setStyle("-fx-background-color:#e88a4b");
-                }
-                else if(r.getAccessibleText().equals("32")){
-                    r.setStyle("-fx-background-color:#ff7a65");
-                }
-                else if(r.getAccessibleText().equals("64")){
-                    r.setStyle("-fx-background-color:#eb4e2f");
-                }
-                else if(r.getAccessibleText().equals("128")){
-                    r.setStyle("-fx-background-color:#f0df73");
-                }
-                else if(r.getAccessibleText().equals("256")){
-                    r.setStyle("-fx-background-color:#f0df48");
-                }
-                else if(r.getAccessibleText().equals("512")){
-                    r.setStyle("-fx-background-color:#f2cf09");
-                }
-                else if(r.getAccessibleText().equals("1024")){
-                    r.setStyle("-fx-background-color:#ffee6b");
-                }
-                else if(r.getAccessibleText().equals("2048")){
-                    r.setStyle("-fx-background-color:#fff587");
-                }
 
                 board.add(r, row, column);
             }
@@ -186,10 +150,116 @@ public class Emma2048 extends Application {
 //            }
 //                });
 
+        int[][] a = {
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+        };
+        //this is a variable to check whether or not the board is full, and below is a VERY long if loop for it
+        int full = 0;
 
+        if(a[0][0]== 1 && a[0][1]== 1 && a[0][2]== 1 && a[0][3]== 1 && a[0][4]== 1 && a[1][0]== 1 && a[1][1]== 1
+                && a[1][2]== 1 && a[1][3]== 1 && a[1][4]== 1 && a[2][0]== 1 && a[2][1]== 1 && a[2][2]== 1
+                && a[2][3]== 1 && a[2][4]== 1 && a[3][0]== 1 && a[3][1]== 1 && a[3][2]== 1 && a[3][3]== 1
+                && a[3][4]== 1){
+            full = 1;
+        }
+         for (int j = 0; j < 2; j++) {
+              Rectangle r2 = new Rectangle();
+              r2.setArcHeight(10);
+              r2.setArcWidth(10);
+              r2.setFill(Color.web("#eee4da"));
+              r2.setHeight(79);
+              r2.setWidth(79);
+              Text t2 = new Text("2");
+              r2.setAccessibleText("2");
+              t2.setFont(Font.font("Calibri", FontWeight.BOLD, 40));
+              int row = (int) (Math.random() * 4);
+              int column = (int) (int) (Math.random() * 4);
+              a[row][column] = 1;
+              StackPane s2 = new StackPane();
+              s2.getChildren().addAll(r2, t2);
+              board.add(s2, row, column);
+              if (r2.getAccessibleText().equals("")) {
+                  r2.setStyle(("-fx-background-color:#cdc1b4"));
+              } else if (r2.getAccessibleText().equals("2")) {
+                  r2.setStyle("-fx-background-color:#d6d4d3");
+              } else if (r2.getAccessibleText().equals("4")) {
+                  r2.setStyle("-fx-background-color:#e6ceb3");
+              } else if (r2.getAccessibleText().equals("8")) {
+                  r2.setStyle("-fx-background-color:#e8a67e");
+              } else if (r2.getAccessibleText().equals("16")) {
+                  r2.setStyle("-fx-background-color:#e88a4b");
+              } else if (r2.getAccessibleText().equals("32")) {
+                  r2.setStyle("-fx-background-color:#ff7a65");
+              } else if (r2.getAccessibleText().equals("64")) {
+                  r2.setStyle("-fx-background-color:#eb4e2f");
+              } else if (r2.getAccessibleText().equals("128")) {
+                  r2.setStyle("-fx-background-color:#f0df73");
+              } else if (r2.getAccessibleText().equals("256")) {
+                  r2.setStyle("-fx-background-color:#f0df48");
+              } else if (r2.getAccessibleText().equals("512")) {
+                  r2.setStyle("-fx-background-color:#f2cf09");
+              } else if (r2.getAccessibleText().equals("1024")) {
+                  r2.setStyle("-fx-background-color:#ffee6b");
+              } else if (r2.getAccessibleText().equals("2048")) {
+                  r2.setStyle("-fx-background-color:#fff587");
+              }
+          }
+//         while(full!=1){
+//             board.setOnKeyPressed(e -> {
+//                 if(e.getCode() == KeyCode.KP_LEFT) {
+//                     for(int row=4; row>=0; row--){
+//                         for(int column=0; column<=4; column++){
+//                             if(a[row][column]==1){
+//                                 //move over cube
+//                             }
+//                         }
+//                     }
+//                 }
+//                if(e.getCode() == KeyCode.KP_RIGHT){
+//                    for(int row=4; row>=0; row--){
+//                        for(int column=0; column<=4; column++){
+//                             if(a[row][column]==1){
+//                                 //move over cube
+//                             }
+//                        }
+//                    }
+//                }
+//                if(e.getCode() == KeyCode.KP_UP){
+//                    for(int row=4; row>=0; row--){
+//                        for(int column=0; column<=4; column++){
+//                             if(a[row][column]==1){
+//                                 //move over cube
+//                             }
+//                        }
+//                    }
+//                }
+//                if(e.getCode() == KeyCode.KP_DOWN) {
+//                    for(int row=4; row>=0; row--){
+//                        for(int column=0; column<=4; column++){
+//                             if(a[row][column]==1){
+//                                 //move over cube
+//                             }
+//                        }
+//                    }
+//                }
+//             });
+//         }
 
+//        while (board.getChildren().get(0) == null && board.getChildren().get(1) == null && board.getChildren().get(2)
+//                == null) {
+//            board.setOnKeyPressed(e -> {
+//                if (e.getCode() == KeyCode.RIGHT) {
+//                    if (board.getChildren().get(1) == null);{
+//
+//                    }
+//                }
+//            });
+//        }
 
-        background.setTop(hb);
+        background.setTop(topBar);
         background.setBottom(i);
         background.setLeft(side1);
         background.setRight(side2);

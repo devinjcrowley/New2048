@@ -145,13 +145,13 @@ public class Yale2048 extends Application {
             board.add(s2, row, column);
         }
 
-        while (board.getChildren().get(0) == null && board.getChildren().get(1) == null && board.getChildren().get(2) == null) {
-            board.setOnKeyPressed(e -> {
-                if (e.getCode() == KeyCode.RIGHT) {
-                    if (board.getChildren().get(1) == null)
-                }
-            });
-        }
+//        while (board.getChildren().get(0) == null && board.getChildren().get(1) == null && board.getChildren().get(2) == null) {
+//            board.setOnKeyPressed(e -> {
+//                if (e.getCode() == KeyCode.RIGHT) {
+//                    if (board.getChildren().get(1) == null)
+//                }
+//            });
+//        }
 
         background.setTop(topBar);
         background.setBottom(i);
