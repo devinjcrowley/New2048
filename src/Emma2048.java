@@ -130,7 +130,10 @@ public class Emma2048 extends Application {
                 r.setPrefWidth(79);
                 //stuff to change color based on the number hahahahhhahahhhahha
                 r.setAccessibleText("");
-                if(r.getAccessibleText().equals("2")) {
+                if(r.getAccessibleText().equals("")) {
+                    r.setStyle(("-fx-background-color:#cdc1b4"));
+                }
+                else if(r.getAccessibleText().equals("2")) {
                     r.setStyle("-fx-background-color:#d6d4d3");
                 }
                 else if(r.getAccessibleText().equals("4")){
