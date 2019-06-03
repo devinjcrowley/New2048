@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -144,6 +145,14 @@ public class Yale2048 extends Application {
             board.add(s2, row, column);
         }
 
+        while (board.getChildren().get(0) == null && board.getChildren().get(1) == null && board.getChildren().get(2) == null) {
+            board.setOnKeyPressed(e -> {
+                if (e.getCode() == KeyCode.RIGHT) {
+                    if (board.getChildren().get(1) == null)
+                }
+            });
+        }
+
         background.setTop(topBar);
         background.setBottom(i);
         background.setLeft(side1);
@@ -155,6 +164,7 @@ public class Yale2048 extends Application {
         ps.setTitle("Yale2048");
         ps.setScene(scene);
         ps.show();
+        board.requestFocus();
     }
 
 
