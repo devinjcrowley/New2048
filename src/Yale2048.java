@@ -181,7 +181,6 @@ public class Yale2048 extends Application {
             }
 
         });
-
         background.setTop(topBar);
         background.setBottom(instructionPane);
         background.setLeft(side1);
