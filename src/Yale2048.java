@@ -139,30 +139,31 @@ public class Yale2048 extends Application {
         }
 
         for (int j = 0; j < 2; j++) {
-            Rectangle r2 = new Rectangle();
-            r2.setArcHeight(10);
-            r2.setArcWidth(10);
-            r2.setFill(Color.web("#eee4da"));
-            r2.setHeight(79);
-            r2.setWidth(79);
-            Text t2 = new Text("2");
-            t2.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-            t2.setFill(Color.web("#776e65"));
+            StackPane s2 = makeS2();
             int row = (int)(Math.random()*4);
             int column = (int)(int)(Math.random()*4);
-            StackPane s2 = new StackPane();
-            s2.getChildren().addAll(r2, t2);
             a[row][column] = s2;
             board.add(a[row][column], column, row);
         }
 
         board.setOnKeyPressed(e -> {
+
             if (e.getCode() == RIGHT) {
                 for (int row = 0; row < 4; row++) {
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null) {
                             board.getChildren().remove(a[row][c]);
-                            board.add(a[row][c], 3, row);
+
+                            if (a[row][3] != null) {
+                                if (a[row][3] == a[row][c] && a[row][3] == makeS2()) {
+                                    StackPane s4 = makeS4();
+                                    board.add(s4, 3, row);
+                                }
+                            }
+                            else {
+                                board.add(a[row][c], 3, row);
+                                a[row][3] = a[row][c];
+                            }
                         }
                     }
 
@@ -181,6 +182,7 @@ public class Yale2048 extends Application {
             }
 
         });
+
         background.setTop(topBar);
         background.setBottom(instructionPane);
         background.setLeft(side1);
@@ -195,5 +197,33 @@ public class Yale2048 extends Application {
         board.requestFocus();
     }
 
+    public StackPane makeS2() {
+        Rectangle r2 = new Rectangle();
+        r2.setArcHeight(10);
+        r2.setArcWidth(10);
+        r2.setFill(Color.web("#eee4da"));
+        r2.setHeight(79);
+        r2.setWidth(79);
+        Text t2 = new Text("2");
+        t2.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t2.setFill(Color.web("#776e65"));
+        StackPane s2 = new StackPane();
+        s2.getChildren().addAll(r2, t2);
+        return s2;
+    }
 
+    public StackPane makeS4() {
+        Rectangle r4 = new Rectangle();
+        r4.setArcHeight(10);
+        r4.setArcWidth(10);
+        r4.setFill(Color.web("#eee4da"));
+        r4.setHeight(79);
+        r4.setWidth(79);
+        Text t4 = new Text("2");
+        t4.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t4.setFill(Color.web("#776e65"));
+        StackPane s4 = new StackPane();
+        s4.getChildren().addAll(r4, t4);
+        return s4;
+    }
 }
