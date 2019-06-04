@@ -172,14 +172,23 @@ public class Emma2048 extends Application {
               r2.setFill(Color.web("#eee4da"));
               r2.setHeight(79);
               r2.setWidth(79);
-              Text t2 = new Text("2");
-              r2.setAccessibleText("2");
-              t2.setFont(Font.font("Calibri", FontWeight.BOLD, 40));
+              int num = (int)(Math.random()*2);
+              StackPane s2 = new StackPane();
+              if(num>=1){
+                  Text t4 = new Text("4");
+                  t4.setFont(Font.font("Calibri", FontWeight.BOLD, 40));
+                  r2.setAccessibleText("4");
+                  s2.getChildren().addAll(r2, t4);
+              }
+              else if(num>=0){
+                  Text t2 = new Text("2");
+                  t2.setFont(Font.font("Calibri", FontWeight.BOLD, 40));
+                  r2.setAccessibleText("2");
+                  s2.getChildren().addAll(r2, t2);
+              }
               int row = (int) (Math.random() * 4);
               int column = (int) (int) (Math.random() * 4);
               a[row][column] = 1;
-              StackPane s2 = new StackPane();
-              s2.getChildren().addAll(r2, t2);
               board.add(s2, row, column);
               if (r2.getAccessibleText().equals("")) {
                   r2.setStyle(("-fx-background-color:#cdc1b4"));
@@ -206,14 +215,15 @@ public class Emma2048 extends Application {
               } else if (r2.getAccessibleText().equals("2048")) {
                   r2.setStyle("-fx-background-color:#fff587");
               }
-          }
+
+         }
 //         while(full!=1){
 //             board.setOnKeyPressed(e -> {
 //                 if(e.getCode() == KeyCode.KP_LEFT) {
 //                     for(int row=4; row>=0; row--){
-//                         for(int column=0; column<=4; column++){
-//                             if(a[row][column]==1){
-//                                 //move over cube
+//                         for(int column=4; column>=0; column--){
+//                             if(a[row][column]==0){
+//                                 a[row][column]=1;
 //                             }
 //                         }
 //                     }
@@ -221,7 +231,7 @@ public class Emma2048 extends Application {
 //                if(e.getCode() == KeyCode.KP_RIGHT){
 //                    for(int row=4; row>=0; row--){
 //                        for(int column=0; column<=4; column++){
-//                             if(a[row][column]==1){
+//                             if(a[row][column]==0){
 //                                 //move over cube
 //                             }
 //                        }
@@ -230,7 +240,7 @@ public class Emma2048 extends Application {
 //                if(e.getCode() == KeyCode.KP_UP){
 //                    for(int row=4; row>=0; row--){
 //                        for(int column=0; column<=4; column++){
-//                             if(a[row][column]==1){
+//                             if(a[row][column]==0){
 //                                 //move over cube
 //                             }
 //                        }
@@ -239,7 +249,7 @@ public class Emma2048 extends Application {
 //                if(e.getCode() == KeyCode.KP_DOWN) {
 //                    for(int row=4; row>=0; row--){
 //                        for(int column=0; column<=4; column++){
-//                             if(a[row][column]==1){
+//                             if(a[row][column]==0){
 //                                 //move over cube
 //                             }
 //                        }
