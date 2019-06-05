@@ -190,7 +190,7 @@ public class Devin2048 extends Application {
                             board.add(n, column - 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
-                            a[row][column] = makeBlank();
+                            a[row][column] = null;
                         }
                     }
                 }
@@ -201,7 +201,7 @@ public class Devin2048 extends Application {
                             board.add(n, column + 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
-                            a[row][column] = makeBlank();
+                            a[row][column] = null;
                         }
                     }
                 }
@@ -212,7 +212,7 @@ public class Devin2048 extends Application {
                         board.add(n, 0, row);
                         board.getChildren().remove(a[row][1]);
                         a[row][0] = n;
-                        a[row][1] = makeBlank();
+                        a[row][1] = null;
                     }
                 }
             }
