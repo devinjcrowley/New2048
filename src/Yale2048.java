@@ -158,11 +158,14 @@ public class Yale2048 extends Application {
                                 if (a[row][3] == a[row][c] && a[row][3] == makeS2()) {
                                     StackPane s4 = makeS4();
                                     board.add(s4, 3, row);
+                                    a[row][3] = makeS4();
+                                    a[row][c] = null;
                                 }
-                            }
-                            else {
-                                board.add(a[row][c], 3, row);
-                                a[row][3] = a[row][c];
+                                else {
+                                    board.add(a[row][c], 2, row);
+                                    a[row][c] = null;
+                                    a[row][2] = makeS2();
+                                }
                             }
                         }
                     }
@@ -174,7 +177,22 @@ public class Yale2048 extends Application {
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null) {
                             board.getChildren().remove(a[row][c]);
-                            board.add(a[row][c], 0, row);
+
+                            if (a[row][0] != null) {
+                                if (a[row][0] == a[row][c] && a[row][0] == makeS2()) {
+                                    StackPane s4 = makeS4();
+                                    board.add(s4, 0, row);
+                                    a[row][0] = makeS4();
+                                    a[row][c] = null;
+                                } else {
+                                    if (a[row][c] == makeS2())
+                                        board.add(makeS2(), 1, row);
+                                    else if (a[row][c] == makeS4())
+                                        board.add(makeS4(), 1, row);
+                                    a[row][c] = null;
+                                    a[row][2] = makeS2();
+                                }
+                            }
                         }
                     }
 
@@ -216,10 +234,10 @@ public class Yale2048 extends Application {
         Rectangle r4 = new Rectangle();
         r4.setArcHeight(10);
         r4.setArcWidth(10);
-        r4.setFill(Color.web("#eee4da"));
+        r4.setFill(Color.web("#ede0c8"));
         r4.setHeight(79);
         r4.setWidth(79);
-        Text t4 = new Text("2");
+        Text t4 = new Text("4");
         t4.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t4.setFill(Color.web("#776e65"));
         StackPane s4 = new StackPane();
