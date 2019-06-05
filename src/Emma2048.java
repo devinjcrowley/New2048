@@ -133,6 +133,7 @@ public class Emma2048 extends Application {
                 r.setArcHeight(10);
                 r.setArcWidth(10);
                 r.setFill(Color.web("#cdc1b4"));
+                blank.setAccessibleText("0");
                 r.setHeight(79);
                 r.setWidth(79);
                 blank.getChildren().addAll(r);
@@ -164,13 +165,24 @@ public class Emma2048 extends Application {
                 for (int column = 2; column >= 0; column--) {
                     for (int row = 0; row < 4; row++) {
                         if (a[row][column] != null && a[row][column + 1] == null) {
-                            ///things to try and add the two squares into a new one - still don't know how to
-                            ///create the new square.... eek
                             StackPane n = makeS2();
                             board.add(n, column + 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column + 1] = n;
                             a[row][column] = null;
+                        }
+                        if (a[row][column] != null && a[row][column + 1]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row][column + 1].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row][column + 1].setAccessibleText(Integer.toString(sum));
+                                if (sum == 4) {
+                                    board.getChildren().remove(a[row][column + 1]);
+                                    StackPane s4 = makeS4();
+                                    board.add(s4, row, (column + 1));
+                                }
+                            }
                         }
                     }
                 }
@@ -183,6 +195,19 @@ public class Emma2048 extends Application {
                             a[row][column + 1] = n;
                             a[row][column] = null;
                         }
+                        if (a[row][column] != null && a[row][column + 1]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row][column + 1].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row][column + 1].setAccessibleText(Integer.toString(sum));
+                                if (sum == 4) {
+                                    board.getChildren().remove(a[row][column + 1]);
+                                    StackPane s4 = makeS4();
+                                    board.add(s4, row, (column + 1));
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -194,22 +219,20 @@ public class Emma2048 extends Application {
                         a[row][2 + 1] = n;
                         a[row][2] = null;
                     }
+                    if (a[row][2] != null && a[row][3]!= null) {
+                        if (a[row][2].getAccessibleText().equals(a[row][3].getAccessibleText())) {
+                            board.getChildren().remove(a[row][2]);
+                            int sum = Integer.parseInt(a[row][3].getAccessibleText()) +
+                                    Integer.parseInt(a[row][2].getAccessibleText());
+                            a[row][3].setAccessibleText(Integer.toString(sum));
+                            if (sum == 4) {
+                                board.getChildren().remove(a[row][3]);
+                                StackPane s4 = makeS4();
+                                board.add(s4, row, (3));
+                            }
+                        }
+                    }
                 }
-
-//
-//                        if (a[row][column] != null && a[row][column + 1]!= null) {
-//                            if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
-//                                board.getChildren().remove(a[row][column]);
-//                                int sum = Integer.parseInt(a[row][column + 1].getAccessibleText()) +
-//                                        Integer.parseInt(a[row][column].getAccessibleText());
-//                                a[row][column + 1].setAccessibleText(Integer.toString(sum));
-//                                if (sum == 4) {
-//                                    board.getChildren().remove(a[row][column + 1]);
-//                                    StackPane s4 = makeS4();
-//                                    board.add(s4, row, (column + 1));
-//                                }
-//                            }
-//                        }
 
             }
 
@@ -340,11 +363,11 @@ public class Emma2048 extends Application {
         r2.setFill(Color.web("#d6d4d3"));
         r2.setHeight(79);
         r2.setWidth(79);
-        r2.setAccessibleText("2");
         Text t2 = new Text("2");
         t2.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t2.setFill(Color.web("#776e65"));
         StackPane s2 = new StackPane();
+        s2.setAccessibleText("2");
         s2.getChildren().addAll(r2, t2);
         return s2;
     }
@@ -517,6 +540,7 @@ public class Emma2048 extends Application {
         r.setFill(Color.web("#cdc1b4"));
         r.setHeight(79);
         r.setWidth(79);
+        blank.setAccessibleText("0");
         blank.getChildren().add(r);
         return blank;
     }
