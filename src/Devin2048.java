@@ -13,8 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import static javafx.scene.input.KeyCode.LEFT;
-import static javafx.scene.input.KeyCode.RIGHT;
+import static javafx.scene.input.KeyCode.*;
 
 public class Devin2048 extends Application {
     public void start (Stage ps) {
@@ -213,6 +212,40 @@ public class Devin2048 extends Application {
                         board.getChildren().remove(a[row][1]);
                         a[row][0] = n;
                         a[row][1] = null;
+                    }
+                }
+            }
+            if (e.getCode() == UP){
+                for (int row = 1; row <= 3; row++) {
+                    for (int column = 0; column < 4; column++) {
+                        if  (a[row][column] != null && a[row - 1][column] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column, row - 1);
+                            board.getChildren().remove(a[row][column]);
+                            a[row - 1][column] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
+                for (int row = 1; row >= 2; row++) {
+                    for (int column = 0; column < 4; column++) {
+                        if  (a[row][column] != null && a[row - 1][column] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column, row - 1);
+                            board.getChildren().remove(a[row][column]);
+                            a[row - 1][column] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
+
+                for (int column = 0; column < 4; column++) {
+                    if  (a[1][column] != null && a[0][column] == null) {
+                        StackPane n = makeS2();
+                        board.add(n, column, 0);
+                        board.getChildren().remove(a[1][column]);
+                        a[0][column] = n;
+                        a[1][column] = null;
                     }
                 }
             }
