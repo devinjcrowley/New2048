@@ -196,9 +196,9 @@ public class Devin2048 extends Application {
                 }
                 for (int column = 1; column <= 2; column++) {
                     for (int row = 0; row < 4; row++) {
-                        if  (a[row][column] != null && a[row][column+1] == null) {
+                        if  (a[row][column] != null && a[row][column-1] == null) {
                             StackPane n = makeS2();
-                            board.add(n, column + 1, row);
+                            board.add(n, column - 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
                             a[row][column] = null;
