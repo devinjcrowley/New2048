@@ -154,6 +154,14 @@ public class Emma2048 extends Application {
                 for (int column = 2; column >= 0; column--) {
                     for (int row = 0; row < 4; row++) {
                         if  (a[row][column] != null && a[row][column+1] == null) {
+                            ///things to try and add the two squares into a new one - still don't know how to
+                            ///create the new square.... eek
+                            if(a[row][column].getAccessibleText().equals(a[row][column+1].getAccessibleText())){
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row][column+1].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row][column+1].setAccessibleText(Integer.toString(sum));
+                            }
                             StackPane n = makeS2();
                             board.add(n, column + 1, row);
                             board.getChildren().remove(a[row][column]);
@@ -303,7 +311,7 @@ public class Emma2048 extends Application {
         ps.show();
         board.requestFocus();
     }
-
+//i made a bunch of new functions to make the different squares with the correct text n accessible text n colors
     public StackPane makeS2() {
         Rectangle r2 = new Rectangle();
         r2.setArcHeight(10);
