@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -13,8 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import static javafx.scene.input.KeyCode.LEFT;
-import static javafx.scene.input.KeyCode.RIGHT;
+import static javafx.scene.input.KeyCode.*;
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
 
@@ -26,17 +26,10 @@ public class Emma2048 extends Application {
                 {null, null, null, null},
                 {null, null, null, null},
         };
-
         BorderPane background = new BorderPane();
-
-        BorderPane gameBorder = new BorderPane();
-        gameBorder.setStyle("-fx-background-color: #bbada0");
 
         GridPane board = new GridPane();
         board.setStyle("-fx-background-color: #bbada0");
-
-        gameBorder.setCenter(board);
-
 
         // Top
         HBox topBar = new HBox();
@@ -88,178 +81,217 @@ public class Emma2048 extends Application {
 
         topBar.getChildren().addAll(text, scoreAndBest);
 
-        // Bottom
-        Pane i = new Pane();
-        i.prefHeightProperty().bind(board.heightProperty().add(60));
-        i.prefWidthProperty().bind(background.widthProperty());
-        background.setBottom(i);
+        //Starting the instructions
+        Pane instructionPane = new Pane();
+        instructionPane.prefHeightProperty().bind(board.heightProperty().add(60));
+        instructionPane.prefWidthProperty().bind(background.widthProperty());
+        background.setBottom(instructionPane);
+
         //instruction header text:
-        Text insHead = new Text( "HOW TO PLAY: ");
-        insHead.setFont(Font.font ("Calibri", FontWeight.BOLD, 20));
-        insHead.setFill(Color.web("#776e65"));
-        insHead.setStroke(Color.web("#776e65"));
-        insHead.xProperty().bind(i.widthProperty().divide(2).subtract(200));
-        insHead.yProperty().bind(i.heightProperty().subtract(35));
-//instructions body text:
-        Text inst1 = new Text("Use your arrow keys to move the tiles.");
-        inst1.setFont(Font.font ("Calibri",15));
-        inst1.setFill(Color.web("#776e65"));
-        inst1.setStroke(Color.web("#776e65"));
-        inst1.xProperty().bind(insHead.xProperty().add(130));
-        inst1.yProperty().bind(i.heightProperty().subtract(35));
-        Text inst2 = new Text("When two tiles with the same " +
+        Text instructionsHead = new Text( "HOW TO PLAY: ");
+        instructionsHead.setFont(Font.font ("Calibri", FontWeight.BOLD, 20));
+        instructionsHead.setFill(Color.web("#776e65"));
+        instructionsHead.setStroke(Color.web("#776e65"));
+        instructionsHead.xProperty().bind(instructionPane.widthProperty().divide(2).subtract(200));
+        instructionsHead.yProperty().bind(instructionPane.heightProperty().subtract(35));
+
+        //instructions body text:
+        Text instructionsOne = new Text("Use your arrow keys to move the tiles.");
+        instructionsOne.setFont(Font.font ("Calibri",15));
+        instructionsOne.setFill(Color.web("#776e65"));
+        instructionsOne.setStroke(Color.web("#776e65"));
+        instructionsOne.xProperty().bind(instructionsHead.xProperty().add(130));
+        instructionsOne.yProperty().bind(instructionPane.heightProperty().subtract(35));
+
+        Text instructionsTwo = new Text("When two tiles with the same " +
                 "number touch, they merge into one!");
-        inst2.setFont(Font.font ("Calibri",15));
-        inst2.setFill(Color.web("#776e65"));
-        inst2.setStroke(Color.web("#776e65"));
-        inst2.xProperty().bind(i.widthProperty().divide(2).subtract(200));
-        inst2.yProperty().bind(i.heightProperty().subtract(15));
-        i.getChildren().addAll(insHead, inst1, inst2);
+        instructionsTwo.setFont(Font.font ("Calibri",15));
+        instructionsTwo.setFill(Color.web("#776e65"));
+        instructionsTwo.setStroke(Color.web("#776e65"));
+        instructionsTwo.xProperty().bind(instructionPane.widthProperty().divide(2).subtract(200));
+        instructionsTwo.yProperty().bind(instructionPane.heightProperty().subtract(15));
+        instructionPane.getChildren().addAll(instructionsHead, instructionsOne, instructionsTwo);
 
         // Sides
         VBox side1 = new VBox();
         VBox side2 = new VBox();
-        side1.setPrefWidth(134);
-        side2.setPrefWidth(134);
+        side1.setPrefWidth(131.5);
+        side2.setPrefWidth(131.5);
 
-        // Center
+        //------------------------------------------------------------------------------------
 
         board.setHgap(5);
         board.setVgap(5);
-
-
+        board.setPadding(new Insets(5, 5, 5, 5));
 
         background.setCenter(board);
 
         for (int row=0; row<4; row++) {
             for (int column = 0; column < 4; column++) {
-                Pane r = new Pane();
-                r.setStyle(("-fx-background-color:#cdc1b4"));
-                r.setPrefHeight(79);
-                r.setPrefWidth(79);
-                //stuff to change color based on the number hahahahhhahahhhahha
-                r.setAccessibleText("");
-
-                board.add(r, row, column);
+                StackPane blank = new StackPane();
+                Rectangle r = new Rectangle();
+                r.setArcHeight(10);
+                r.setArcWidth(10);
+                r.setFill(Color.web("#cdc1b4"));
+                r.setHeight(79);
+                r.setWidth(79);
+                blank.getChildren().addAll(r);
+                board.add(blank, row, column);
             }
         }
 
-//        board.setOnKeyPressed(e->{
-//            if(e.getCode() == KeyCode.KP_LEFT) {
-//
-//            }
-//            if(e.getCode() == KeyCode.KP_RIGHT){
-//
-//            }
-//            if(e.getCode() == KeyCode.KP_UP){
-//
-//            }
-//            if(e.getCode() == KeyCode.KP_DOWN){
-//
-//            }
-//                });
-
-        //this is a variable to check whether or not the board is full, and below is a VERY long if loop for it
-        int full = 0;
-
-        if(a[0][0]!=null && a[0][1]!=null && a[0][2]!=null && a[0][3]!=null && a[0][4]!=null &&
-                a[1][0]!=null && a[1][1]!=null && a[1][2]!=null && a[1][3]!=null && a[1][4]!=null
-                && a[2][0]!=null && a[2][1]!=null && a[2][2]!=null && a[2][3]!=null
-                && a[2][4]!=null && a[3][0]!=null && a[3][1]!=null && a[3][2]!=null && a[3][3]!=null
-                && a[3][4]!=null){
-            full = 1;
+        for (int j = 0; j < 2; j++) {
+            StackPane s2 = makeS2();
+            int row = (int)(Math.random()*4);
+            int column = (int)(int)(Math.random()*4);
+            a[row][column] = s2;
+            board.add(s2, column, row);
         }
-         for (int j = 0; j < 2; j++) {
-              Rectangle r2 = new Rectangle();
-              r2.setArcHeight(10);
-              r2.setArcWidth(10);
-              r2.setFill(Color.web("#eee4da"));
-              r2.setHeight(79);
-              r2.setWidth(79);
-              int num = (int)(Math.random()*2);
-              StackPane s2 = new StackPane();
-              if(num>=1){
-                  Text t4 = new Text("4");
-                  t4.setFont(Font.font("Calibri", FontWeight.BOLD, 40));
-                  r2.setAccessibleText("4");
-                  s2.getChildren().addAll(r2, t4);
-              }
-              else if(num>=0){
-                  Text t2 = new Text("2");
-                  t2.setFont(Font.font("Calibri", FontWeight.BOLD, 40));
-                  r2.setAccessibleText("2");
-                  s2.getChildren().addAll(r2, t2);
-              }
-             if (r2.getAccessibleText().equals("")) {
-                 r2.setFill(Color.web("#eee4da"));
-             } else if (r2.getAccessibleText().equals("2")) {
-                 r2.setFill(Color.web("#d6d4d3"));
-             } else if (r2.getAccessibleText().equals("4")) {
-                 r2.setFill(Color.web("#e6ceb3"));
-             } else if (r2.getAccessibleText().equals("8")) {
-                 r2.setFill(Color.web("#e8a67e"));
-             } else if (r2.getAccessibleText().equals("16")) {
-                 r2.setFill(Color.web("#e88a4b"));
-             } else if (r2.getAccessibleText().equals("32")) {
-                 r2.setFill(Color.web("#ff7a65"));
-             } else if (r2.getAccessibleText().equals("64")) {
-                 r2.setFill(Color.web("#eb4e2f"));
-             } else if (r2.getAccessibleText().equals("128")) {
-                 r2.setFill(Color.web("#f0df73"));
-             } else if (r2.getAccessibleText().equals("256")) {
-                 r2.setFill(Color.web("#f0df48"));
-             } else if (r2.getAccessibleText().equals("512")) {
-                 r2.setFill(Color.web("#f2cf09"));
-             } else if (r2.getAccessibleText().equals("1024")) {
-                 r2.setFill(Color.web("#ffee6b"));
-             } else if (r2.getAccessibleText().equals("2048")) {
-                 r2.setFill(Color.web("#fff587"));
-             }
-
-             int row = (int) (Math.random() * 4);
-              int column = (int) (int) (Math.random() * 4);
-              board.add(s2, row, column);
-         }
 
         board.setOnKeyPressed(e -> {
 
             if (e.getCode() == RIGHT) {
-                for (int row = 0; row < 4; row++) {
-                    for (int c = 0; c < 4; c++) {
-                        if (a[row][c] != null) {
-                            board.getChildren().remove(a[row][c]);
-
-                            if (a[row][3] != null) {
-                                if (a[row][3] == a[row][c] && a[row][3] == makeS2()) {
-                                    StackPane s4 = makeS4();
-                                    board.add(s4, 3, row);
-                                }
-                            }
-                            else {
-                                board.add(a[row][c], 3, row);
-                                a[row][3] = a[row][c];
-                            }
+                for (int column = 2; column >= 0; column--) {
+                    for (int row = 0; row < 4; row++) {
+                        if  (a[row][column] != null && a[row][column+1] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column + 1, row);
+                            board.getChildren().remove(a[row][column]);
+                            a[row][column + 1] = n;
+                            a[row][column] = null;
                         }
                     }
+                }
+                for (int column = 2; column >= 1; column--) {
+                    for (int row = 0; row < 4; row++) {
+                        if  (a[row][column] != null && a[row][column+1] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column + 1, row);
+                            board.getChildren().remove(a[row][column]);
+                            a[row][column + 1] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
 
+                for (int row = 0; row < 4; row++) {
+                    if  (a[row][2] != null && a[row][2+1] == null) {
+                        StackPane n = makeS2();
+                        board.add(n, 2 + 1, row);
+                        board.getChildren().remove(a[row][2]);
+                        a[row][2 + 1] = n;
+                        a[row][2] = null;
+                    }
                 }
             }
             if (e.getCode() == LEFT) {
-                for (int row = 0; row < 4; row++) {
-                    for (int c = 0; c < 4; c++) {
-                        if (a[row][c] != null) {
-                            board.getChildren().remove(a[row][c]);
-                            board.add(a[row][c], 0, row);
+                for (int column = 1; column <= 3; column++) {
+                    for (int row = 0; row < 4; row++) {
+                        if  (a[row][column] != null && a[row][column-1] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column - 1, row);
+                            board.getChildren().remove(a[row][column]);
+                            a[row][column - 1] = n;
+                            a[row][column] = null;
                         }
                     }
+                }
+                for (int column = 1; column <= 2; column++) {
+                    for (int row = 0; row < 4; row++) {
+                        if  (a[row][column] != null && a[row][column-1] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column - 1, row);
+                            board.getChildren().remove(a[row][column]);
+                            a[row][column - 1] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
 
+                for (int row = 0; row < 4; row++) {
+                    if  (a[row][1] != null && a[row][0] == null) {
+                        StackPane n = makeS2();
+                        board.add(n, 0, row);
+                        board.getChildren().remove(a[row][1]);
+                        a[row][0] = n;
+                        a[row][1] = null;
+                    }
+                }
+            }
+            if (e.getCode() == UP){
+                for (int row = 1; row <= 3; row++) {
+                    for (int column = 0; column < 4; column++) {
+                        if  (a[row][column] != null && a[row - 1][column] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column, row - 1);
+                            board.getChildren().remove(a[row][column]);
+                            a[row - 1][column] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
+                for (int row = 1; row <= 2; row++) {
+                    for (int column = 0; column < 4; column++) {
+                        if  (a[row][column] != null && a[row - 1][column] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column, row - 1);
+                            board.getChildren().remove(a[row][column]);
+                            a[row - 1][column] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
+
+                for (int column = 0; column < 4; column++) {
+                    if  (a[1][column] != null && a[0][column] == null) {
+                        StackPane n = makeS2();
+                        board.add(n, column, 0);
+                        board.getChildren().remove(a[1][column]);
+                        a[0][column] = n;
+                        a[1][column] = null;
+                    }
+                }
+            }
+
+            if (e.getCode() == DOWN){
+                for (int row = 0; row < 3; row++) {
+                    for (int column = 0; column < 4; column++) {
+                        if  (a[row][column] != null && a[row + 1][column] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column, row + 1);
+                            board.getChildren().remove(a[row][column]);
+                            a[row + 1][column] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
+                for (int row = 0; row <3; row++) {
+                    for (int column = 0; column < 4; column++) {
+                        if  (a[row][column] != null && a[row + 1][column] == null) {
+                            StackPane n = makeS2();
+                            board.add(n, column, row + 1);
+                            board.getChildren().remove(a[row][column]);
+                            a[row + 1][column] = n;
+                            a[row][column] = null;
+                        }
+                    }
+                }
+
+                for (int column = 3; column >= 0; column--) {
+                    if  (a[1][column] != null && a[0][column] == null) {
+                        StackPane n = makeS2();
+                        board.add(n, column, 0);
+                        board.getChildren().remove(a[1][column]);
+                        a[1][column] = n;
+                        a[0][column] = null;
+                    }
                 }
             }
 
         });
 
         background.setTop(topBar);
-        background.setBottom(i);
+        background.setBottom(instructionPane);
         background.setLeft(side1);
         background.setRight(side2);
 
@@ -269,14 +301,17 @@ public class Emma2048 extends Application {
         ps.setTitle("Emma2048");
         ps.setScene(scene);
         ps.show();
+        board.requestFocus();
     }
+
     public StackPane makeS2() {
         Rectangle r2 = new Rectangle();
         r2.setArcHeight(10);
         r2.setArcWidth(10);
-        r2.setFill(Color.web("#eee4da"));
+        r2.setFill(Color.web("#d6d4d3"));
         r2.setHeight(79);
         r2.setWidth(79);
+        r2.setAccessibleText("2");
         Text t2 = new Text("2");
         t2.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t2.setFill(Color.web("#776e65"));
@@ -289,14 +324,173 @@ public class Emma2048 extends Application {
         Rectangle r4 = new Rectangle();
         r4.setArcHeight(10);
         r4.setArcWidth(10);
-        r4.setFill(Color.web("#eee4da"));
+        r4.setAccessibleText("4");
+        r4.setFill(Color.web("#e6ceb3"));
         r4.setHeight(79);
         r4.setWidth(79);
-        Text t4 = new Text("2");
+        Text t4 = new Text("4");
         t4.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t4.setFill(Color.web("#776e65"));
+        t4.setFill(Color.web("#e6ceb3"));
         StackPane s4 = new StackPane();
         s4.getChildren().addAll(r4, t4);
         return s4;
     }
+
+    public StackPane makeS8() {
+        Rectangle r8 = new Rectangle();
+        r8.setArcHeight(10);
+        r8.setArcWidth(10);
+        r8.setAccessibleText("8");
+        r8.setFill(Color.web("#e8a67e"));
+        r8.setHeight(79);
+        r8.setWidth(79);
+        Text t8 = new Text("8");
+        t8.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t8.setFill(Color.web("#e6ceb3"));
+        StackPane s8 = new StackPane();
+        s8.getChildren().addAll(r8, t8);
+        return s8;
+    }
+
+    public StackPane makeS16() {
+        Rectangle r16 = new Rectangle();
+        r16.setArcHeight(10);
+        r16.setArcWidth(10);
+        r16.setAccessibleText("16");
+        r16.setFill(Color.web("e88a4b"));
+        r16.setHeight(79);
+        r16.setWidth(79);
+        Text t16 = new Text("16");
+        t16.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t16.setFill(Color.web("#e6ceb3"));
+        StackPane s16 = new StackPane();
+        s16.getChildren().addAll(r16, t16);
+        return s16;
+    }
+
+    public StackPane makeS32() {
+        Rectangle r32 = new Rectangle();
+        r32.setArcHeight(10);
+        r32.setArcWidth(10);
+        r32.setAccessibleText("32");
+        r32.setFill(Color.web("#ff7a65"));
+        r32.setHeight(79);
+        r32.setWidth(79);
+        Text t32 = new Text("32");
+        t32.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t32.setFill(Color.web("#e6ceb3"));
+        StackPane s4 = new StackPane();
+        s4.getChildren().addAll(r32, t32);
+        return s4;
+    }
+
+    public StackPane makeS64() {
+        Rectangle r64 = new Rectangle();
+        r64.setArcHeight(10);
+        r64.setArcWidth(10);
+        r64.setAccessibleText("64");
+        r64.setFill(Color.web("#eb4e2f"));
+        r64.setHeight(79);
+        r64.setWidth(79);
+        Text t64 = new Text("64");
+        t64.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t64.setFill(Color.web("#e6ceb3"));
+        StackPane s64 = new StackPane();
+        s64.getChildren().addAll(r64, t64);
+        return s64;
+    }
+
+    public StackPane makeS128() {
+        Rectangle r128 = new Rectangle();
+        r128.setArcHeight(10);
+        r128.setArcWidth(10);
+        r128.setAccessibleText("128");
+        r128.setFill(Color.web("#f0df73"));
+        r128.setHeight(79);
+        r128.setWidth(79);
+        Text t128 = new Text("128");
+        t128.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t128.setFill(Color.web("#e6ceb3"));
+        StackPane s128 = new StackPane();
+        s128.getChildren().addAll(r128, t128);
+        return s128;
+    }
+
+    public StackPane makeS256() {
+        Rectangle r256 = new Rectangle();
+        r256.setArcHeight(10);
+        r256.setArcWidth(10);
+        r256.setAccessibleText("256");
+        r256.setFill(Color.web("#f0df48"));
+        r256.setHeight(79);
+        r256.setWidth(79);
+        Text t256 = new Text("256");
+        t256.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t256.setFill(Color.web("#e6ceb3"));
+        StackPane s256 = new StackPane();
+        s256.getChildren().addAll(r256, t256);
+        return s256;
+    }
+
+    public StackPane makeS512() {
+        Rectangle r512 = new Rectangle();
+        r512.setArcHeight(10);
+        r512.setArcWidth(10);
+        r512.setAccessibleText("512");
+        r512.setFill(Color.web("#f2cf09"));
+        r512.setHeight(79);
+        r512.setWidth(79);
+        Text t512 = new Text("512");
+        t512.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t512.setFill(Color.web("#e6ceb3"));
+        StackPane s512 = new StackPane();
+        s512.getChildren().addAll(r512, t512);
+        return s512;
+    }
+
+    public StackPane makeS1024() {
+        Rectangle r1024 = new Rectangle();
+        r1024.setArcHeight(10);
+        r1024.setArcWidth(10);
+        r1024.setAccessibleText("1024");
+        r1024.setFill(Color.web("#ffee6b"));
+        r1024.setHeight(79);
+        r1024.setWidth(79);
+        Text t1024 = new Text("1024");
+        t1024.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t1024.setFill(Color.web("#e6ceb3"));
+        StackPane s1024 = new StackPane();
+        s1024.getChildren().addAll(r1024, t1024);
+        return s1024;
+    }
+
+    public StackPane makeS2048() {
+        Rectangle r2048 = new Rectangle();
+        r2048.setArcHeight(10);
+        r2048.setArcWidth(10);
+        r2048.setAccessibleText("2048");
+        r2048.setFill(Color.web("#fff587"));
+        r2048.setHeight(79);
+        r2048.setWidth(79);
+        Text t2048 = new Text("2048");
+        t2048.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t2048.setFill(Color.web("#e6ceb3"));
+        StackPane s2048 = new StackPane();
+        s2048.getChildren().addAll(r2048, t2048);
+        return s2048;
+    }
+
+    public StackPane makeBlank() {
+        StackPane blank = new StackPane();
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#cdc1b4"));
+        r.setHeight(79);
+        r.setWidth(79);
+        blank.getChildren().add(r);
+        return blank;
+    }
 }
+
+
