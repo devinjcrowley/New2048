@@ -207,7 +207,7 @@ public class Devin2048 extends Application {
 
                 for (int row = 0; row < 4; row++) {
                     if (a[row][2] != null && a[row][2 + 1] == null) {
-                        StackPane n = whatTheWhick(a, row, column);
+                        StackPane n = whatTheWhick(a, row, 2);
                         board.add(n, 2 + 1, row);
                         board.getChildren().remove(a[row][2]);
                         a[row][2 + 1] = n;
@@ -258,7 +258,7 @@ public class Devin2048 extends Application {
 
                 for (int row = 0; row < 4; row++) {
                     if  (a[row][1] != null && a[row][0] == null) {
-                        StackPane n = whatTheWhick(a, row, column);
+                        StackPane n = whatTheWhick(a, row, 1);
                         board.add(n, 0, row);
                         board.getChildren().remove(a[row][1]);
                         a[row][0] = n;
@@ -292,7 +292,7 @@ public class Devin2048 extends Application {
 
                 for (int column = 0; column < 4; column++) {
                     if  (a[1][column] != null && a[0][column] == null) {
-                        StackPane n = whatTheWhick(a, row, column);
+                        StackPane n = whatTheWhick(a, 1, column);
                         board.add(n, column, 0);
                         board.getChildren().remove(a[1][column]);
                         a[0][column] = n;
@@ -327,7 +327,7 @@ public class Devin2048 extends Application {
 
                 for (int column = 3; column >= 0; column--) {
                     if  (a[1][column] != null && a[0][column] == null) {
-                        StackPane n = whatTheWhick(a, row, column);
+                        StackPane n = whatTheWhick(a, 1, column);
                         board.add(n, column, 0);
                         board.getChildren().remove(a[1][column]);
                         a[1][column] = n;
