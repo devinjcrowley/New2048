@@ -175,6 +175,24 @@ public class Test extends Application {
                                             a[row][i] = makeS8();
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS16(), i, row);
+                                            a[row][i] = makeS16();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS32(), i, row);
+                                            a[row][i] = makeS32();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS64(), i, row);
+                                            a[row][i] = makeS64();
+                                            break;
+                                        }
                                         //do 4, 8, 16 etc.
                                     }
                                     else {
@@ -186,6 +204,26 @@ public class Test extends Application {
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS4(), i - 1, row);
                                             a[row][i - 1] = makeS4();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), i - 1, row);
+                                            a[row][i-1] = makeS8();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), i-1, row);
+                                            a[row][i-1] = makeS16();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeS32(), i-1, row);
+                                            a[row][i-1] = makeS32();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeS64(), i-1, row);
+                                            a[row][i-1] = makeS64();
                                             break;
                                         }
                                     }
@@ -201,6 +239,27 @@ public class Test extends Application {
                                         a[row][i] = makeS4();
                                         break;
                                     }
+                                    else if (a[row][c].getAccessibleText().equals("8")) {
+                                        board.add(makeS8(), 3, row);
+                                        a[row][i] = makeS8();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("16")) {
+                                        board.add(makeS16(), 3, row);
+                                        a[row][i] = makeS16();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("32")) {
+                                        board.add(makeS32(), 3, row);
+                                        a[row][i] = makeS32();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("64")) {
+                                        board.add(makeS64(), 3, row);
+                                        a[row][i] = makeS64();
+                                        break;
+                                    }
+
                                     //do 4, 8, 16 etc.
                                 }
                             }
@@ -237,6 +296,24 @@ public class Test extends Application {
                                             a[row][i] = makeS8();
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS16(), i, row);
+                                            a[row][i] = makeS16();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS32(), i, row);
+                                            a[row][i] = makeS32();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS64(), i, row);
+                                            a[row][i] = makeS64();
+                                            break;
+                                        }
                                         //do 4, 8, 16 etc.
                                     }
                                     else {
@@ -248,6 +325,26 @@ public class Test extends Application {
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS4(), i+1, row);
                                             a[row][i+1] = makeS4();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), i+1, row);
+                                            a[row][i+1] = makeS8();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), i+1, row);
+                                            a[row][i+1] = makeS16();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeS32(), i+1, row);
+                                            a[row][i+1] = makeS32();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeS64(), i+1, row);
+                                            a[row][i+1] = makeS64();
                                             break;
                                         }
 
@@ -262,6 +359,26 @@ public class Test extends Application {
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), 0, row);
                                         a[row][i] = makeS4();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("8")) {
+                                        board.add(makeS8(), 0, row);
+                                        a[row][i] = makeS8();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("16")) {
+                                        board.add(makeS16(), 0, row);
+                                        a[row][i] = makeS16();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("32")) {
+                                        board.add(makeS32(), 0, row);
+                                        a[row][i] = makeS32();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("64")) {
+                                        board.add(makeS64(), 0, row);
+                                        a[row][i] = makeS64();
                                         break;
                                     }
                                 }
@@ -312,6 +429,26 @@ public class Test extends Application {
                                             a[i+1][c] = makeS4();
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), c, i+1);
+                                            a[i + 1][c] = makeS8();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), c, i+1);
+                                            a[i + 1][c] = makeS16();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeS32(), c, i+1);
+                                            a[i + 1][c] = makeS32();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeS64(), c, i+1);
+                                            a[i + 1][c] = makeS64();
+                                            break;
+                                        }
 
                                     }
                                 }
@@ -324,6 +461,26 @@ public class Test extends Application {
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), c, 0);
                                         a[i][c] = makeS4();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("8")) {
+                                        board.add(makeS8(), c, 0);
+                                        a[i][c] = makeS8();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("16")) {
+                                        board.add(makeS16(), c, 0);
+                                        a[i][c] = makeS16();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("32")) {
+                                        board.add(makeS32(), c, 0);
+                                        a[i][c] = makeS32();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("64")) {
+                                        board.add(makeS64(), c, 0);
+                                        a[i][c] = makeS64();
                                         break;
                                     }
                                 }
@@ -339,7 +496,7 @@ public class Test extends Application {
             // What happens if they click the up arrow key
             if (e.getCode() == DOWN) {
                 for (int c = 0; c < 4; c++) {
-                    for (int row = 0; row < 4; row++) {
+                    for (int row = 3; row >= 0; row--) {
                         if (a[row][c] != null && row != 3) {
 
                             board.add(makeRectangle(), c, row);
@@ -373,7 +530,26 @@ public class Test extends Application {
                                             a[i-1][c] = makeS4();
                                             break;
                                         }
-
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), c, i-1);
+                                            a[i - 1][c] = makeS8();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), c, i-1);
+                                            a[i - 1][c] = makeS16();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeS32(), c, i-1);
+                                            a[i - 1][c] = makeS32();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeS64(), c, i-1);
+                                            a[i - 1][c] = makeS64();
+                                            break;
+                                        }
                                     }
                                 }
                                 else if (i == 3 && a[i][c] == null) {
@@ -385,6 +561,26 @@ public class Test extends Application {
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), c, 3);
                                         a[i][c] = makeS4();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("8")) {
+                                        board.add(makeS8(), c, 3);
+                                        a[i][c] = makeS8();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("16")) {
+                                        board.add(makeS16(), c, 3);
+                                        a[i][c] = makeS16();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("32")) {
+                                        board.add(makeS32(), c, 3);
+                                        a[i][c] = makeS32();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("64")) {
+                                        board.add(makeS64(), c, 3);
+                                        a[i][c] = makeS64();
                                         break;
                                     }
                                 }
@@ -400,16 +596,19 @@ public class Test extends Application {
             int twoOrFour = (int)(Math.random()*10 + 1);
             int r = (int)(Math.random()*4);
             int c = (int)(Math.random()*4);
-            if (a[r][c] == null) {
-                if (twoOrFour - 10 == 0) {
-                    board.add(makeS4(), c, r);
-                    a[r][c] = makeS4();
-                }
-                else {
-                    board.add(makeS2(), c, r);
-                    a[r][c] = makeS2();
-                }
+            while (a[r][c] != null) {
+                r = (int)(Math.random()*4);
+                c = (int)(Math.random()*4);
 
+
+            }
+            if (twoOrFour - 10 == 0) {
+                board.add(makeS4(), c, r);
+                a[r][c] = makeS4();
+            }
+            else {
+                board.add(makeS2(), c, r);
+                a[r][c] = makeS2();
             }
 
 
@@ -479,10 +678,90 @@ public class Test extends Application {
         r.setWidth(79);
         Text t = new Text("8");
         t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t.setFill(Color.web("#776e65"));
+        t.setFill(Color.web("#f9f6f2"));
         StackPane s = new StackPane();
         s.getChildren().addAll(r, t);
         s.setAccessibleText("8");
+        return s;
+    }
+
+    public StackPane makeS16() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f59563"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("16");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("16");
+        return s;
+    }
+
+    public StackPane makeS32() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f67c5f"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("32");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("32");
+        return s;
+    }
+
+    public StackPane makeS64() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f65e3b"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("64");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("64");
+        return s;
+    }
+
+    public StackPane makeS128() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#edcf72"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("128");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("128");
+        return s;
+    }
+
+    public StackPane makeS256() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#edcc61"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("256");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("256");
         return s;
     }
 }
