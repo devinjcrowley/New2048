@@ -142,46 +142,54 @@ public class Emma2048 extends Application {
         }
 
         for (int j = 0; j < 2; j++) {
-            StackPane s2 = makeS2();
+            StackPane sRan = makeRandom();
             int row = (int)(Math.random()*4);
             int column = (int)(int)(Math.random()*4);
-            a[row][column] = s2;
-            board.add(s2, column, row);
+            a[row][column] = sRan;
+            board.add(sRan, column, row);
         }
-//        if(a[row][column].getAccessibleText().equals(a[row][column+1].getAccessibleText())){
-//            board.getChildren().remove(a[row][column]);
-//            int sum = Integer.parseInt(a[row][column+1].getAccessibleText()) +
-//                    Integer.parseInt(a[row][column].getAccessibleText());
-//            a[row][column+1].setAccessibleText(Integer.toString(sum));
-//            if(sum==4){
-//                board.getChildren().remove(a[row][column+1]);
-//                StackPane s4 = makeS4();
-//                board.add(s4, row, (column+1));
-//            }
-//        }
+
         board.setOnKeyPressed(e -> {
 
             if (e.getCode() == RIGHT) {
+                int r = (int)(Math.random()*4);
+                int c = (int)(int)(Math.random()*4);
+                while(a[r][c]!= null){
+                    r = (int)(Math.random()*4);
+                    c = (int)(int)(Math.random()*4);
+                }
+                StackPane newBlock = makeRandom();
+                board.add(newBlock, r, c);
+                a[r][c]=newBlock;
                 for (int column = 2; column >= 0; column--) {
                     for (int row = 0; row < 4; row++) {
                         if (a[row][column] != null && a[row][column + 1] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column + 1, row);
-                            board.getChildren().remove(a[row][column]);
-                            a[row][column + 1] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]){
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column + 1, row);
+                                a[row][column + 1] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = whatTheWhick(a, row, column);
+                                board.add(n, column + 1, row);
+
+                                board.getChildren().remove(a[row][column]);
+                                a[row][column + 1] = n;
+                                a[row][column] = null;
+                            }
                         }
-                        if (a[row][column] != null && a[row][column + 1]!= null) {
+                        else if (a[row][column] != null && a[row][column + 1]!= null) {
                             if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
                                 board.getChildren().remove(a[row][column]);
                                 int sum = Integer.parseInt(a[row][column + 1].getAccessibleText()) +
                                         Integer.parseInt(a[row][column].getAccessibleText());
                                 a[row][column + 1].setAccessibleText(Integer.toString(sum));
-                                if (sum == 4) {
-                                    board.getChildren().remove(a[row][column + 1]);
-                                    StackPane s4 = makeS4();
-                                    board.add(s4, row, (column + 1));
-                                }
+                                board.getChildren().remove(a[row][column + 1]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column + 1), row);
+                                a[row][column + 1] = n;
+                                a[row][column] = null;
                             }
                         }
                     }
@@ -189,23 +197,32 @@ public class Emma2048 extends Application {
                 for (int column = 2; column >= 1; column--) {
                     for (int row = 0; row < 4; row++) {
                         if (a[row][column] != null && a[row][column + 1] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column + 1, row);
-                            board.getChildren().remove(a[row][column]);
-                            a[row][column + 1] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]){
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column + 1, row);
+                                a[row][column + 1] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = whatTheWhick(a, row, column);
+                                board.add(n, column + 1, row);
+
+                                board.getChildren().remove(a[row][column]);
+                                a[row][column + 1] = n;
+                                a[row][column] = null;
+                            }
                         }
-                        if (a[row][column] != null && a[row][column + 1]!= null) {
+                        else if (a[row][column] != null && a[row][column + 1]!= null) {
                             if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
                                 board.getChildren().remove(a[row][column]);
                                 int sum = Integer.parseInt(a[row][column + 1].getAccessibleText()) +
                                         Integer.parseInt(a[row][column].getAccessibleText());
                                 a[row][column + 1].setAccessibleText(Integer.toString(sum));
-                                if (sum == 4) {
-                                    board.getChildren().remove(a[row][column + 1]);
-                                    StackPane s4 = makeS4();
-                                    board.add(s4, row, (column + 1));
-                                }
+                                board.getChildren().remove(a[row][column + 1]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column + 1), row);
+                                a[row][column + 1] = n;
+                                a[row][column] = null;
                             }
                         }
                     }
@@ -213,23 +230,34 @@ public class Emma2048 extends Application {
 
                 for (int row = 0; row < 4; row++) {
                     if (a[row][2] != null && a[row][2 + 1] == null) {
-                        StackPane n = makeS2();
-                        board.add(n, 2 + 1, row);
-                        board.getChildren().remove(a[row][2]);
-                        a[row][2 + 1] = n;
-                        a[row][2] = null;
-                    }
-                    if (a[row][2] != null && a[row][3]!= null) {
-                        if (a[row][2].getAccessibleText().equals(a[row][3].getAccessibleText())) {
-                            board.getChildren().remove(a[row][2]);
-                            int sum = Integer.parseInt(a[row][3].getAccessibleText()) +
-                                    Integer.parseInt(a[row][2].getAccessibleText());
-                            a[row][3].setAccessibleText(Integer.toString(sum));
-                            if (sum == 4) {
-                                board.getChildren().remove(a[row][3]);
-                                StackPane s4 = makeS4();
-                                board.add(s4, row, (3));
+                        if (a[row][2] != null && a[row][2 + 1] == null) {
+                            if(a[r][c]==a[row][2]){
+                                board.getChildren().remove(a[row][2]);
+                                board.add(newBlock, 2 + 1, row);
+                                a[row][2 + 1] = newBlock;
+                                a[row][2] = null;
                             }
+                            else{
+                                StackPane n = whatTheWhick(a, row, 2);
+                                board.add(n, 2 + 1, row);
+
+                                board.getChildren().remove(a[row][2]);
+                                a[row][2 + 1] = n;
+                                a[row][2] = null;
+                            }
+                        }
+                    }
+                    else if (a[row][2] != null && a[row][3]!= null) {
+                        if (a[row][2].getAccessibleText().equals(a[row][2 + 1].getAccessibleText())) {
+                            board.getChildren().remove(a[row][2]);
+                            int sum = Integer.parseInt(a[row][2 + 1].getAccessibleText()) +
+                                    Integer.parseInt(a[row][2].getAccessibleText());
+                            a[row][2 + 1].setAccessibleText(Integer.toString(sum));
+                            board.getChildren().remove(a[row][2 + 1]);
+                            StackPane n = whatTheWhick2(sum);
+                            board.add(n, (2 + 1), row);
+                            a[row][2 + 1] = n;
+                            a[row][2] = null;
                         }
                     }
                 }
@@ -237,105 +265,323 @@ public class Emma2048 extends Application {
             }
 
             if (e.getCode() == LEFT) {
+                int r = (int)(Math.random()*4);
+                int c = (int)(int)(Math.random()*4);
+                while(a[r][c]!= null){
+                    r = (int)(Math.random()*4);
+                    c = (int)(int)(Math.random()*4);
+                }
+                StackPane newBlock = makeRandom();
+                a[r][c]=newBlock;
+                board.add(newBlock, r, c);
                 for (int column = 1; column <= 3; column++) {
                     for (int row = 0; row < 4; row++) {
                         if  (a[row][column] != null && a[row][column-1] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column - 1, row);
-                            board.getChildren().remove(a[row][column]);
-                            a[row][column - 1] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]) {
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column - 1, row);
+                                a[row][column - 1] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = makeS2();
+                                board.add(n, column - 1, row);
+                                board.getChildren().remove(a[row][column]);
+                                a[row][column - 1] = n;
+                                a[row][column] = null;
+                            }
+                        }
+                        else if (a[row][column] != null && a[row][column + 1]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row][column - 1].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row][column - 1].setAccessibleText(Integer.toString(sum));
+                                board.getChildren().remove(a[row][column - 1]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column - 1), row);
+                                a[row][column - 1] = n;
+                                a[row][column] = null;
+                            }
                         }
                     }
                 }
                 for (int column = 1; column <= 2; column++) {
                     for (int row = 0; row < 4; row++) {
                         if  (a[row][column] != null && a[row][column-1] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column - 1, row);
-                            board.getChildren().remove(a[row][column]);
-                            a[row][column - 1] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]) {
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column - 1, row);
+                                a[row][column - 1] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = makeS2();
+                                board.add(n, column - 1, row);
+                                board.getChildren().remove(a[row][column]);
+                                a[row][column - 1] = n;
+                                a[row][column] = null;
+                            }
+                        }
+                        else if (a[row][column] != null && a[row][column + 1]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row][column + 1].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row][column - 1].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row][column - 1].setAccessibleText(Integer.toString(sum));
+                                board.getChildren().remove(a[row][column - 1]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column - 1), row);
+                                a[row][column - 1] = n;
+                                a[row][column] = null;
+                            }
                         }
                     }
                 }
 
                 for (int row = 0; row < 4; row++) {
                     if  (a[row][1] != null && a[row][0] == null) {
-                        StackPane n = makeS2();
-                        board.add(n, 0, row);
-                        board.getChildren().remove(a[row][1]);
-                        a[row][0] = n;
-                        a[row][1] = null;
+                        if(a[r][c]==a[row][0]) {
+                            board.getChildren().remove(a[row][1]);
+                            board.add(newBlock, 0, row);
+                            a[row][0] = newBlock;
+                            a[row][1] = null;
+                        }
+                        else{
+                            StackPane n = makeS2();
+                            board.add(n, 0, row);
+                            board.getChildren().remove(a[row][1]);
+                            a[row][0] = n;
+                            a[row][1] = null;
+                        }
+                    }
+                    else if (a[row][1] != null && a[row][1 + 1]!= null) {
+                        if (a[row][1].getAccessibleText().equals(a[row][1 + 1].getAccessibleText())) {
+                            board.getChildren().remove(a[row][1]);
+                            int sum = Integer.parseInt(a[row][1 - 1].getAccessibleText()) +
+                                    Integer.parseInt(a[row][1].getAccessibleText());
+                            a[row][1 + 1].setAccessibleText(Integer.toString(sum));
+                            board.getChildren().remove(a[row][1 - 1]);
+                            StackPane n = whatTheWhick2(sum);
+                            board.add(n, (1 - 1), row);
+                            a[row][1 - 1] = n;
+                            a[row][1] = null;
+                        }
                     }
                 }
             }
             if (e.getCode() == UP){
+                int r = (int)(Math.random()*4);
+                int c = (int)(int)(Math.random()*4);
+                while(a[r][c]!= null){
+                    r = (int)(Math.random()*4);
+                    c = (int)(int)(Math.random()*4);
+                }
+                StackPane newBlock = makeRandom();
+                a[r][c]=newBlock;
+                board.add(newBlock, r, c);
                 for (int row = 1; row <= 3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row - 1][column] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column, row - 1);
-                            board.getChildren().remove(a[row][column]);
-                            a[row - 1][column] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]) {
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column, row - 1);
+                                a[row - 1][column] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = makeS2();
+                                board.add(n, column, row - 1);
+                                board.getChildren().remove(a[row][column]);
+                                a[row - 1][column] = n;
+                                a[row][column] = null;
+                            }
+                        }
+                        else if (a[row][column] != null && a[row-1][column]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row-1][column].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row-1][column].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row-1][column].setAccessibleText(Integer.toString(sum));
+                                board.getChildren().remove(a[row-1][column]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column), row-1);
+                                a[row-1][column] = n;
+                                a[row][column] = null;
+                            }
                         }
                     }
                 }
                 for (int row = 1; row <= 2; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row - 1][column] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column, row - 1);
-                            board.getChildren().remove(a[row][column]);
-                            a[row - 1][column] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]) {
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column, row - 1);
+                                a[row - 1][column] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = makeS2();
+                                board.add(n, column, row - 1);
+                                board.getChildren().remove(a[row][column]);
+                                a[row - 1][column] = n;
+                                a[row][column] = null;
+                            }
+
+                        }
+                        else if (a[row][column] != null && a[row-1][column]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row-1][column].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row-1][column].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row-1][column].setAccessibleText(Integer.toString(sum));
+                                board.getChildren().remove(a[row-1][column]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column), row-1);
+                                a[row-1][column] = n;
+                                a[row][column] = null;
+                            }
                         }
                     }
                 }
 
                 for (int column = 0; column < 4; column++) {
                     if  (a[1][column] != null && a[0][column] == null) {
-                        StackPane n = makeS2();
-                        board.add(n, column, 0);
-                        board.getChildren().remove(a[1][column]);
-                        a[0][column] = n;
-                        a[1][column] = null;
+                        if(a[r][c]==a[1][column]) {
+                            board.getChildren().remove(a[1][column]);
+                            board.add(newBlock, column, 1 - 1);
+                            a[0][column] = newBlock;
+                            a[1][column] = null;
+                        }
+                        else{
+                            StackPane n = makeS2();
+                            board.add(n, column, 0);
+                            board.getChildren().remove(a[1][column]);
+                            a[0][column] = n;
+                            a[1][column] = null;
+                        }
+                    }
+                    else if (a[1][column] != null && a[1-1][column]!= null) {
+                        if (a[1][column].getAccessibleText().equals(a[1-1][column].getAccessibleText())) {
+                            board.getChildren().remove(a[1][column]);
+                            int sum = Integer.parseInt(a[1-1][column].getAccessibleText()) +
+                                    Integer.parseInt(a[1][column].getAccessibleText());
+                            a[1-1][column].setAccessibleText(Integer.toString(sum));
+                            board.getChildren().remove(a[1-1][column]);
+                            StackPane n = whatTheWhick2(sum);
+                            board.add(n, (column), 1-1);
+                            a[1-1][column] = n;
+                            a[1][column] = null;
+                        }
                     }
                 }
             }
 
             if (e.getCode() == DOWN){
+                int r = (int)(Math.random()*4);
+                int c = (int)(int)(Math.random()*4);
+                while(a[r][c]!= null){
+                    r = (int)(Math.random()*4);
+                    c = (int)(int)(Math.random()*4);
+                }
+                StackPane newBlock = makeRandom();
+                a[r][c]=newBlock;
+                board.add(newBlock, r, c);
                 for (int row = 0; row < 3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row + 1][column] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column, row + 1);
-                            board.getChildren().remove(a[row][column]);
-                            a[row + 1][column] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]) {
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column, row + 1);
+                                a[row + 1][column] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = makeS2();
+                                board.add(n, column, row + 1);
+                                board.getChildren().remove(a[row][column]);
+                                a[row + 1][column] = n;
+                                a[row][column] = null;
+                            }
+
+                        }
+                        else if (a[row][column] != null && a[row+1][column]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row+1][column].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row+1][column].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row+1][column].setAccessibleText(Integer.toString(sum));
+                                board.getChildren().remove(a[row+1][column]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column), row+1);
+                                a[row+1][column] = n;
+                                a[row][column] = null;
+                            }
                         }
                     }
                 }
                 for (int row = 0; row <3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row + 1][column] == null) {
-                            StackPane n = makeS2();
-                            board.add(n, column, row + 1);
-                            board.getChildren().remove(a[row][column]);
-                            a[row + 1][column] = n;
-                            a[row][column] = null;
+                            if(a[r][c]==a[row][column]) {
+                                board.getChildren().remove(a[row][column]);
+                                board.add(newBlock, column, row + 1);
+                                a[row + 1][column] = newBlock;
+                                a[row][column] = null;
+                            }
+                            else{
+                                StackPane n = makeS2();
+                                board.add(n, column, row + 1);
+                                board.getChildren().remove(a[row][column]);
+                                a[row + 1][column] = n;
+                                a[row][column] = null;
+                            }
+                        }
+                        else if (a[row][column] != null && a[row+1][column]!= null) {
+                            if (a[row][column].getAccessibleText().equals(a[row+1][column].getAccessibleText())) {
+                                board.getChildren().remove(a[row][column]);
+                                int sum = Integer.parseInt(a[row+1][column].getAccessibleText()) +
+                                        Integer.parseInt(a[row][column].getAccessibleText());
+                                a[row+1][column].setAccessibleText(Integer.toString(sum));
+                                board.getChildren().remove(a[row+1][column]);
+                                StackPane n = whatTheWhick2(sum);
+                                board.add(n, (column), row+1);
+                                a[row+1][column] = n;
+                                a[row][column] = null;
+                            }
                         }
                     }
                 }
 
                 for (int column = 3; column >= 0; column--) {
                     if  (a[1][column] != null && a[0][column] == null) {
-                        StackPane n = makeS2();
-                        board.add(n, column, 0);
-                        board.getChildren().remove(a[1][column]);
-                        a[1][column] = n;
-                        a[0][column] = null;
+                        if(a[r][c]==a[1][column]) {
+                            board.getChildren().remove(a[1][column]);
+                            board.add(newBlock, column, 1 + 1);
+                            a[1+ 1][column] = newBlock;
+                            a[1][column] = null;
+                        }
+                        else{
+                            StackPane n = makeS2();
+                            board.add(n, column, 1+ 1);
+                            board.getChildren().remove(a[1][column]);
+                            a[1 + 1][column] = n;
+                            a[1][column] = null;
+                        }
+                    }
+                    else if (a[1][column] != null && a[1+1][column]!= null) {
+                        if (a[1][column].getAccessibleText().equals(a[1+1][column].getAccessibleText())) {
+                            board.getChildren().remove(a[1][column]);
+                            int sum = Integer.parseInt(a[1+1][column].getAccessibleText()) +
+                                    Integer.parseInt(a[1][column].getAccessibleText());
+                            a[1+1][column].setAccessibleText(Integer.toString(sum));
+                            board.getChildren().remove(a[1+1][column]);
+                            StackPane n = whatTheWhick2(sum);
+                            board.add(n, (column), 1+1);
+                            a[1+1][column] = n;
+                            a[1][column] = null;
+                        }
                     }
                 }
             }
@@ -355,7 +601,7 @@ public class Emma2048 extends Application {
         ps.show();
         board.requestFocus();
     }
-//i made a bunch of new functions to make the different squares with the correct text n accessible text n colors
+    //i made a bunch of new functions to make the different squares with the correct text n accessible text n colors
     public StackPane makeS2() {
         Rectangle r2 = new Rectangle();
         r2.setArcHeight(10);
@@ -376,14 +622,14 @@ public class Emma2048 extends Application {
         Rectangle r4 = new Rectangle();
         r4.setArcHeight(10);
         r4.setArcWidth(10);
-        r4.setAccessibleText("4");
         r4.setFill(Color.web("#e6ceb3"));
         r4.setHeight(79);
         r4.setWidth(79);
         Text t4 = new Text("4");
         t4.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t4.setFill(Color.web("#e6ceb3"));
+        t4.setFill(Color.web("#776e65"));
         StackPane s4 = new StackPane();
+        s4.setAccessibleText("4");
         s4.getChildren().addAll(r4, t4);
         return s4;
     }
@@ -392,7 +638,6 @@ public class Emma2048 extends Application {
         Rectangle r8 = new Rectangle();
         r8.setArcHeight(10);
         r8.setArcWidth(10);
-        r8.setAccessibleText("8");
         r8.setFill(Color.web("#e8a67e"));
         r8.setHeight(79);
         r8.setWidth(79);
@@ -400,6 +645,7 @@ public class Emma2048 extends Application {
         t8.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t8.setFill(Color.web("#e6ceb3"));
         StackPane s8 = new StackPane();
+        s8.setAccessibleText("8");
         s8.getChildren().addAll(r8, t8);
         return s8;
     }
@@ -408,7 +654,6 @@ public class Emma2048 extends Application {
         Rectangle r16 = new Rectangle();
         r16.setArcHeight(10);
         r16.setArcWidth(10);
-        r16.setAccessibleText("16");
         r16.setFill(Color.web("e88a4b"));
         r16.setHeight(79);
         r16.setWidth(79);
@@ -416,6 +661,7 @@ public class Emma2048 extends Application {
         t16.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t16.setFill(Color.web("#e6ceb3"));
         StackPane s16 = new StackPane();
+        s16.setAccessibleText("16");
         s16.getChildren().addAll(r16, t16);
         return s16;
     }
@@ -424,23 +670,22 @@ public class Emma2048 extends Application {
         Rectangle r32 = new Rectangle();
         r32.setArcHeight(10);
         r32.setArcWidth(10);
-        r32.setAccessibleText("32");
         r32.setFill(Color.web("#ff7a65"));
         r32.setHeight(79);
         r32.setWidth(79);
         Text t32 = new Text("32");
         t32.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t32.setFill(Color.web("#e6ceb3"));
-        StackPane s4 = new StackPane();
-        s4.getChildren().addAll(r32, t32);
-        return s4;
+        StackPane s32 = new StackPane();
+        s32.setAccessibleText("32");
+        s32.getChildren().addAll(r32, t32);
+        return s32;
     }
 
     public StackPane makeS64() {
         Rectangle r64 = new Rectangle();
         r64.setArcHeight(10);
         r64.setArcWidth(10);
-        r64.setAccessibleText("64");
         r64.setFill(Color.web("#eb4e2f"));
         r64.setHeight(79);
         r64.setWidth(79);
@@ -448,6 +693,7 @@ public class Emma2048 extends Application {
         t64.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t64.setFill(Color.web("#e6ceb3"));
         StackPane s64 = new StackPane();
+        s64.setAccessibleText("64");
         s64.getChildren().addAll(r64, t64);
         return s64;
     }
@@ -456,7 +702,6 @@ public class Emma2048 extends Application {
         Rectangle r128 = new Rectangle();
         r128.setArcHeight(10);
         r128.setArcWidth(10);
-        r128.setAccessibleText("128");
         r128.setFill(Color.web("#f0df73"));
         r128.setHeight(79);
         r128.setWidth(79);
@@ -464,6 +709,7 @@ public class Emma2048 extends Application {
         t128.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t128.setFill(Color.web("#e6ceb3"));
         StackPane s128 = new StackPane();
+        s128.setAccessibleText("128");
         s128.getChildren().addAll(r128, t128);
         return s128;
     }
@@ -488,7 +734,6 @@ public class Emma2048 extends Application {
         Rectangle r512 = new Rectangle();
         r512.setArcHeight(10);
         r512.setArcWidth(10);
-        r512.setAccessibleText("512");
         r512.setFill(Color.web("#f2cf09"));
         r512.setHeight(79);
         r512.setWidth(79);
@@ -496,6 +741,7 @@ public class Emma2048 extends Application {
         t512.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t512.setFill(Color.web("#e6ceb3"));
         StackPane s512 = new StackPane();
+        s512.setAccessibleText("512");
         s512.getChildren().addAll(r512, t512);
         return s512;
     }
@@ -504,7 +750,6 @@ public class Emma2048 extends Application {
         Rectangle r1024 = new Rectangle();
         r1024.setArcHeight(10);
         r1024.setArcWidth(10);
-        r1024.setAccessibleText("1024");
         r1024.setFill(Color.web("#ffee6b"));
         r1024.setHeight(79);
         r1024.setWidth(79);
@@ -512,6 +757,7 @@ public class Emma2048 extends Application {
         t1024.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t1024.setFill(Color.web("#e6ceb3"));
         StackPane s1024 = new StackPane();
+        s1024.setAccessibleText("1024");
         s1024.getChildren().addAll(r1024, t1024);
         return s1024;
     }
@@ -520,7 +766,6 @@ public class Emma2048 extends Application {
         Rectangle r2048 = new Rectangle();
         r2048.setArcHeight(10);
         r2048.setArcWidth(10);
-        r2048.setAccessibleText("2048");
         r2048.setFill(Color.web("#fff587"));
         r2048.setHeight(79);
         r2048.setWidth(79);
@@ -528,6 +773,7 @@ public class Emma2048 extends Application {
         t2048.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
         t2048.setFill(Color.web("#e6ceb3"));
         StackPane s2048 = new StackPane();
+        s2048.setAccessibleText("2048");
         s2048.getChildren().addAll(r2048, t2048);
         return s2048;
     }
@@ -543,6 +789,70 @@ public class Emma2048 extends Application {
         blank.setAccessibleText("0");
         blank.getChildren().add(r);
         return blank;
+    }
+
+    public StackPane makeRandom(){
+        int twoOrFour = (int)(Math.random()*10+1);
+        if (twoOrFour - 10 == 0) {
+            return makeS4();
+        }
+        else {
+            return makeS2();
+        }
+    }
+
+    public StackPane whatTheWhick2(int sum) {
+        if (sum == 4) {
+            return makeS4();
+        } else if (sum == 8) {
+            return makeS8();
+        } else if (sum == 16) {
+            return makeS16();
+        } else if (sum == 32) {
+            return makeS32();
+        } else if (sum == 64) {
+            return makeS64();
+        } else if (sum == 128) {
+            return makeS128();
+        } else if (sum == 256) {
+            return makeS256();
+        } else if (sum == 512) {
+            return makeS512();
+        } else if (sum == 1024) {
+            return makeS1024();
+        } else if (sum == 2048) {
+            return makeS2048();
+        }
+        return makeBlank();
+    }
+    public StackPane whatTheWhick(StackPane[][] a, int row, int column) {
+        if (a[row][column].getAccessibleText().equals("0")) {
+            return makeBlank();
+        }
+        if (a[row][column].getAccessibleText().equals("2")) {
+            return makeS2();
+        } else if (a[row][column].getAccessibleText().equals("4")) {
+            return makeS4();
+        } else if (a[row][column].getAccessibleText().equals("8")) {
+            return makeS8();
+        } else if (a[row][column].getAccessibleText().equals("16")) {
+            return makeS16();
+        } else if (a[row][column].getAccessibleText().equals("32")) {
+            return makeS32();
+        } else if (a[row][column].getAccessibleText().equals("64")) {
+            return makeS64();
+        } else if (a[row][column].getAccessibleText().equals("128")) {
+            return makeS128();
+        } else if (a[row][column].getAccessibleText().equals("256")) {
+            return makeS256();
+        } else if (a[row][column].getAccessibleText().equals("512")) {
+            return makeS512();
+        } else if (a[row][column].getAccessibleText().equals("1024")) {
+            return makeS1024();
+        } else if (a[row][column].getAccessibleText().equals("2048")) {
+            return makeS2048();
+        }
+        else return makeBlank();
     }
 }
 
