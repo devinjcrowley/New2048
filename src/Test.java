@@ -127,13 +127,7 @@ public class Test extends Application {
 
         for (int row=0; row<4; row++) {
             for (int column = 0; column < 4; column++) {
-                Rectangle r = new Rectangle();
-                r.setArcHeight(10);
-                r.setArcWidth(10);
-                r.setFill(Color.web("#cdc1b4"));
-                r.setHeight(79);
-                r.setWidth(79);
-                board.add(r, row, column);
+                board.add(makeRectangle(), row, column);
             }
         }
 
@@ -157,38 +151,55 @@ public class Test extends Application {
         }
 
         board.setOnKeyPressed(e -> {
+
+            // What happens if they click the right arrow key
             if (e.getCode() == RIGHT) {
                 for (int row = 0; row < 4; row++) {
                     for (int c = 3; c >= 0; c--) {
                         if (a[row][c] != null && c != 3) {
 
-                            board.getChildren().remove(a[row][c]);
+                            board.add(makeRectangle(), c, row);
 
                             for (int i = c + 1; i < 4; i++) {
                                 if (a[row][i] != null) {
                                     if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
                                         if (a[row][c].getAccessibleText().equals("2")) {
-                                            board.getChildren().remove(a[row][i]);
+                                            board.add(makeRectangle(), i, row);
                                             board.add(makeS4(), i, row);
                                             a[row][i] = makeS4();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS8(), i, row);
+                                            a[row][i] = makeS8();
                                             break;
                                         }
                                         //do 4, 8, 16 etc.
                                     }
                                     else {
-                                        board.add(a[row][c], i-1, row);
-                                        a[row][i-1] = a[row][c];
-                                        break;
+                                        if (a[row][c].getAccessibleText().equals("2")) {
+                                            board.add(makeS2(), i - 1, row);
+                                            a[row][i - 1] = makeS2();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeS4(), i - 1, row);
+                                            a[row][i - 1] = makeS4();
+                                            break;
+                                        }
                                     }
                                 }
                                 else if (i == 3 && a[row][i] == null) {
                                     if (a[row][c].getAccessibleText().equals("2")) {
                                         board.add(makeS2(), 3, row);
                                         a[row][i] = makeS2();
+                                        break;
                                     }
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), 3, row);
                                         a[row][i] = makeS4();
+                                        break;
                                     }
                                     //do 4, 8, 16 etc.
                                 }
@@ -201,37 +212,57 @@ public class Test extends Application {
 
                 }
             }
+
+            // What happens if they click the left arrow key
             if (e.getCode() == LEFT) {
                 for (int row = 0; row < 4; row++) {
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null && c != 0) {
-                            board.getChildren().remove(a[row][c]);
+
+                            board.add(makeRectangle(), c, row);
+
 
                             for (int i = c - 1; i >= 0; i--) {
                                 if (a[row][i] != null) {
                                     if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
                                         if (a[row][c].getAccessibleText().equals("2")) {
-                                            board.getChildren().remove(a[row][i]);
+                                            board.add(makeRectangle(), i, row);
                                             board.add(makeS4(), i, row);
-                                            a[row][i] = null;
+                                            a[row][i] = makeS4();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS8(), i, row);
+                                            a[row][i] = makeS8();
                                             break;
                                         }
                                         //do 4, 8, 16 etc.
                                     }
                                     else {
-                                        board.add(a[row][c], i+1, row);
-                                        a[row][i+1] = a[row][c];
-                                        break;
+                                        if (a[row][c].getAccessibleText().equals("2")) {
+                                            board.add(makeS2(), i+1, row);
+                                            a[row][i+1] = makeS2();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeS4(), i+1, row);
+                                            a[row][i+1] = makeS4();
+                                            break;
+                                        }
+
                                     }
                                 }
                                 else if (i == 0 && a[row][i] == null) {
                                     if (a[row][c].getAccessibleText().equals("2")) {
                                         board.add(makeS2(), 0, row);
                                         a[row][i] = makeS2();
+                                        break;
                                     }
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), 0, row);
                                         a[row][i] = makeS4();
+                                        break;
                                     }
                                 }
                             }
@@ -243,7 +274,129 @@ public class Test extends Application {
 
                 }
             }
-            /*
+
+            // What happens if they click the up arrow key
+            if (e.getCode() == UP) {
+                for (int c = 0; c < 4; c++) {
+                    for (int row = 0; row < 4; row++) {
+                        if (a[row][c] != null && row != 0) {
+
+                            board.add(makeRectangle(), c, row);
+
+
+                            for (int i = row - 1; i >= 0; i--) {
+                                if (a[i][c] != null) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                        if (a[row][c].getAccessibleText().equals("2")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS4(), c, i);
+                                            a[i][c] = makeS4();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS8(), c, i);
+                                            a[i][c] = makeS8();
+                                            break;
+                                        }
+                                        //do 4, 8, 16 etc.
+                                    }
+                                    else {
+                                        if (a[row][c].getAccessibleText().equals("2")) {
+                                            board.add(makeS2(), c, i+1);
+                                            a[i+1][c] = makeS2();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeS4(), c, i+1);
+                                            a[i+1][c] = makeS4();
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                else if (i == 0 && a[i][c] == null) {
+                                    if (a[row][c].getAccessibleText().equals("2")) {
+                                        board.add(makeS2(), c, 0);
+                                        a[i][c] = makeS2();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("4")) {
+                                        board.add(makeS4(), c, 0);
+                                        a[i][c] = makeS4();
+                                        break;
+                                    }
+                                }
+                            }
+
+                            a[row][c] = null;
+                        }
+
+                    }
+                }
+            }
+
+            // What happens if they click the up arrow key
+            if (e.getCode() == DOWN) {
+                for (int c = 0; c < 4; c++) {
+                    for (int row = 0; row < 4; row++) {
+                        if (a[row][c] != null && row != 3) {
+
+                            board.add(makeRectangle(), c, row);
+
+
+                            for (int i = row + 1; i < 4; i++) {
+                                if (a[i][c] != null) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                        if (a[row][c].getAccessibleText().equals("2")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS4(), c, i);
+                                            a[i][c] = makeS4();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS8(), c, i);
+                                            a[i][c] = makeS8();
+                                            break;
+                                        }
+                                        //do 4, 8, 16 etc.
+                                    }
+                                    else {
+                                        if (a[row][c].getAccessibleText().equals("2")) {
+                                            board.add(makeS2(), c, i-1);
+                                            a[i-1][c] = makeS2();
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("4")) {
+                                            board.add(makeS4(), c, i-1);
+                                            a[i-1][c] = makeS4();
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                else if (i == 3 && a[i][c] == null) {
+                                    if (a[row][c].getAccessibleText().equals("2")) {
+                                        board.add(makeS2(), c, 3);
+                                        a[i][c] = makeS2();
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("4")) {
+                                        board.add(makeS4(), c, 3);
+                                        a[i][c] = makeS4();
+                                        break;
+                                    }
+                                }
+                            }
+
+                            a[row][c] = null;
+                        }
+
+                    }
+                }
+            }
+
             int twoOrFour = (int)(Math.random()*10 + 1);
             int r = (int)(Math.random()*4);
             int c = (int)(Math.random()*4);
@@ -258,7 +411,8 @@ public class Test extends Application {
                 }
 
             }
-            */
+
+
         });
 
         background.setTop(topBar);
@@ -274,6 +428,16 @@ public class Test extends Application {
         board.requestFocus();
     }
 
+    public Rectangle makeRectangle() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#cdc1b4"));
+        r.setHeight(79);
+        r.setWidth(79);
+        return r;
+    }
+
     public StackPane makeS2() {
         Rectangle r = new Rectangle();
         r.setArcHeight(10);
@@ -287,7 +451,6 @@ public class Test extends Application {
         StackPane s = new StackPane();
         s.getChildren().addAll(r, t);
         s.setAccessibleText("2");
-        s.setId("square2");
         return s;
     }
 
