@@ -148,24 +148,14 @@ public class Devin2048 extends Application {
             a[row][column] = s2;
             board.add(s2, column, row);
         }
-//        if(a[row][column].getAccessibleText().equals(a[row][column+1].getAccessibleText())){
-//            board.getChildren().remove(a[row][column]);
-//            int sum = Integer.parseInt(a[row][column+1].getAccessibleText()) +
-//                    Integer.parseInt(a[row][column].getAccessibleText());
-//            a[row][column+1].setAccessibleText(Integer.toString(sum));
-//            if(sum==4){
-//                board.getChildren().remove(a[row][column+1]);
-//                StackPane s4 = makeS4();
-//                board.add(s4, row, (column+1));
-//            }
-//        }
+
         board.setOnKeyPressed(e -> {
 
             if (e.getCode() == RIGHT) {
                 for (int column = 2; column >= 0; column--) {
                     for (int row = 0; row < 4; row++) {
                         if (a[row][column] != null && a[row][column + 1] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column + 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column + 1] = n;
@@ -191,7 +181,7 @@ public class Devin2048 extends Application {
                 for (int column = 2; column >= 1; column--) {
                     for (int row = 0; row < 4; row++) {
                         if (a[row][column] != null && a[row][column + 1] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column + 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column + 1] = n;
@@ -217,7 +207,7 @@ public class Devin2048 extends Application {
 
                 for (int row = 0; row < 4; row++) {
                     if (a[row][2] != null && a[row][2 + 1] == null) {
-                        StackPane n = makeS2();
+                        StackPane n = whatTheWhick(a, row, column);
                         board.add(n, 2 + 1, row);
                         board.getChildren().remove(a[row][2]);
                         a[row][2 + 1] = n;
@@ -246,7 +236,7 @@ public class Devin2048 extends Application {
                 for (int column = 1; column <= 3; column++) {
                     for (int row = 0; row < 4; row++) {
                         if  (a[row][column] != null && a[row][column-1] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column - 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
@@ -257,7 +247,7 @@ public class Devin2048 extends Application {
                 for (int column = 1; column <= 2; column++) {
                     for (int row = 0; row < 4; row++) {
                         if  (a[row][column] != null && a[row][column-1] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column - 1, row);
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
@@ -268,7 +258,7 @@ public class Devin2048 extends Application {
 
                 for (int row = 0; row < 4; row++) {
                     if  (a[row][1] != null && a[row][0] == null) {
-                        StackPane n = makeS2();
+                        StackPane n = whatTheWhick(a, row, column);
                         board.add(n, 0, row);
                         board.getChildren().remove(a[row][1]);
                         a[row][0] = n;
@@ -280,7 +270,7 @@ public class Devin2048 extends Application {
                 for (int row = 1; row <= 3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row - 1][column] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column, row - 1);
                             board.getChildren().remove(a[row][column]);
                             a[row - 1][column] = n;
@@ -291,7 +281,7 @@ public class Devin2048 extends Application {
                 for (int row = 1; row <= 2; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row - 1][column] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column, row - 1);
                             board.getChildren().remove(a[row][column]);
                             a[row - 1][column] = n;
@@ -302,7 +292,7 @@ public class Devin2048 extends Application {
 
                 for (int column = 0; column < 4; column++) {
                     if  (a[1][column] != null && a[0][column] == null) {
-                        StackPane n = makeS2();
+                        StackPane n = whatTheWhick(a, row, column);
                         board.add(n, column, 0);
                         board.getChildren().remove(a[1][column]);
                         a[0][column] = n;
@@ -315,7 +305,7 @@ public class Devin2048 extends Application {
                 for (int row = 0; row < 3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row + 1][column] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column, row + 1);
                             board.getChildren().remove(a[row][column]);
                             a[row + 1][column] = n;
@@ -326,7 +316,7 @@ public class Devin2048 extends Application {
                 for (int row = 0; row <3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row + 1][column] == null) {
-                            StackPane n = makeS2();
+                            StackPane n = whatTheWhick(a, row, column);
                             board.add(n, column, row + 1);
                             board.getChildren().remove(a[row][column]);
                             a[row + 1][column] = n;
@@ -337,7 +327,7 @@ public class Devin2048 extends Application {
 
                 for (int column = 3; column >= 0; column--) {
                     if  (a[1][column] != null && a[0][column] == null) {
-                        StackPane n = makeS2();
+                        StackPane n = whatTheWhick(a, row, column);
                         board.add(n, column, 0);
                         board.getChildren().remove(a[1][column]);
                         a[1][column] = n;
@@ -536,6 +526,33 @@ public class Devin2048 extends Application {
         StackPane s2048 = new StackPane();
         s2048.getChildren().addAll(r2048, t2048);
         return s2048;
+    }
+
+    public StackPane whatTheWhick(StackPane[][] a, int row, int column) {
+        if (a[row][column].getAccessibleText().equals("2")) {
+            return makeS2();
+        } else if (a[row][column].getAccessibleText().equals("4")) {
+            return makeS4();
+        } else if (a[row][column].getAccessibleText().equals("8")) {
+            return makeS8();
+        } else if (a[row][column].getAccessibleText().equals("16")) {
+            return makeS16();
+        } else if (a[row][column].getAccessibleText().equals("32")) {
+            return makeS32();
+        } else if (a[row][column].getAccessibleText().equals("64")) {
+            return makeS64();
+        } else if (a[row][column].getAccessibleText().equals("128")) {
+            return makeS128();
+        } else if (a[row][column].getAccessibleText().equals("256")) {
+            return makeS256();
+        } else if (a[row][column].getAccessibleText().equals("512")) {
+            return makeS512();
+        } else if (a[row][column].getAccessibleText().equals("1024")) {
+            return makeS1024();
+        } else if (a[row][column].getAccessibleText().equals("2048")) {
+            return makeS2048();
+        }
+        return makeBlank();
     }
 
     public StackPane makeBlank() {
