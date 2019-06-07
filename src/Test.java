@@ -599,14 +599,11 @@ public class Test extends Application {
             while (a[r][c] != null) {
                 r = (int)(Math.random()*4);
                 c = (int)(Math.random()*4);
-
-
             }
             if (twoOrFour - 10 == 0) {
                 board.add(makeS4(), c, r);
                 a[r][c] = makeS4();
-            }
-            else {
+            } else {
                 board.add(makeS2(), c, r);
                 a[r][c] = makeS2();
             }

@@ -141,32 +141,24 @@ public class Devin2048 extends Application {
             }
         }
 
-//        for (int j = 0; j < 2; j++) {
-//            int row = (int)(Math.random()*4);
-//            int column = (int)(int)(Math.random()*4);
-//            int twoOrFour = (int)(Math.random()*10+1);
-//            while (a[row][column] != null) {
-//                column = (int)(Math.random()*4);
-//                row = (int)(Math.random()*4);
-//            }
-//            if (twoOrFour - 10 == 0) {
-//                StackPane s4 = makeS4();
-//                a[row][column] = s4;
-//            }
-//            else {
-//                StackPane s2 = makeS2();
-//                a[row][column] = s2;
-//            }
-//            board.add(a[row][column], column, row);
-//        }
-        int r = 0;
-        int c = 0;
-        a[r][c] = makeS2();
-        board.add(a[r][c], r, c);
-        r = 1;
-        c = 0;
-        a[r][c] = makeS2();
-        board.add(a[r][c], r, c);
+        for (int j = 0; j < 2; j++) {
+            int row = (int)(Math.random()*4);
+            int column = (int)(int)(Math.random()*4);
+            int twoOrFour = (int)(Math.random()*10+1);
+            while (a[row][column] != null) {
+                column = (int)(Math.random()*4);
+                row = (int)(Math.random()*4);
+            }
+            if (twoOrFour - 10 == 0) {
+                StackPane s4 = makeS4();
+                a[row][column] = s4;
+            }
+            else {
+                StackPane s2 = makeS2();
+                a[row][column] = s2;
+            }
+            board.add(a[row][column], column, row);
+        }
 
         board.setOnKeyPressed(e -> {
 
@@ -457,9 +449,15 @@ public class Devin2048 extends Application {
                     }
                 }
             }
-
-
-
+            int r = (int)(Math.random()*4);
+            int c = (int)(int)(Math.random()*4);
+            while(a[r][c]!= null){
+                r = (int)(Math.random()*4);
+                c = (int)(int)(Math.random()*4);
+            }
+            StackPane newBlock = makeRandom();
+            board.add(newBlock, r, c);
+            a[r][c]=newBlock;
         });
 
         background.setTop(topBar);
@@ -724,6 +722,16 @@ public class Devin2048 extends Application {
         blank.setAccessibleText("0");
         blank.getChildren().add(r);
         return blank;
+    }
+
+    public StackPane makeRandom(){
+        int twoOrFour = (int)(Math.random()*10+1);
+        if (twoOrFour - 10 == 0) {
+            return makeS4();
+        }
+        else {
+            return makeS2();
+        }
     }
 }
 
