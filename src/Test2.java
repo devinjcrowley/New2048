@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.Stack;
 
 import static javafx.scene.input.KeyCode.*;
@@ -152,7 +153,16 @@ public class Test2 extends Application {
             }
             board.add(a[row][column], column, row);
         }
-
+        for(int i = 0; i<4; i++)
+        {
+            for(int j = 0; j<4; j++)
+            {
+                System.out.print(a[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
         board.setOnKeyPressed(e -> {
 
             if (e.getCode() == RIGHT) {
@@ -164,6 +174,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row][column + 1] = n;
                             a[row][column] = null;
+                            System.out.println("\n R");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -175,6 +196,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row][column + 1] = n;
                             a[row][column] = null;
+                            System.out.println("\n R");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -186,6 +218,17 @@ public class Test2 extends Application {
                         board.getChildren().remove(a[row][2]);
                         a[row][2 + 1] = n;
                         a[row][2] = null;
+                        System.out.println("\n R");
+                        for(int i = 0; i<4; i++)
+                        {
+                            for(int j = 0; j<4; j++)
+                            {
+                                System.out.print(a[i][j]);
+                                System.out.print(" ");
+                            }
+                            System.out.println("\n");
+                        }
+                        System.out.println("-------------");
                     }
                 }
 
@@ -205,6 +248,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
                             a[row][column] = null;
+                            System.out.println("\n L");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -216,6 +270,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row][column - 1] = n;
                             a[row][column] = null;
+                            System.out.println("\n L");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -227,6 +292,17 @@ public class Test2 extends Application {
                         board.getChildren().remove(a[row][1]);
                         a[row][0] = n;
                         a[row][1] = null;
+                        System.out.println("\n L");
+                        for(int i = 0; i<4; i++)
+                        {
+                            for(int j = 0; j<4; j++)
+                            {
+                                System.out.print(a[i][j]);
+                                System.out.print(" ");
+                            }
+                            System.out.println("\n");
+                        }
+                        System.out.println("-------------");
                     }
                 }
             }
@@ -239,6 +315,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row - 1][column] = n;
                             a[row][column] = null;
+                            System.out.println("\n U");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -250,6 +337,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row - 1][column] = n;
                             a[row][column] = null;
+                            System.out.println("\n U");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -261,6 +359,17 @@ public class Test2 extends Application {
                         board.getChildren().remove(a[1][column]);
                         a[0][column] = n;
                         a[1][column] = null;
+                        System.out.println("\n U");
+                        for(int i = 0; i<4; i++)
+                        {
+                            for(int j = 0; j<4; j++)
+                            {
+                                System.out.print(a[i][j]);
+                                System.out.print(" ");
+                            }
+                            System.out.println("\n");
+                        }
+                        System.out.println("-------------");
                     }
                 }
             }
@@ -285,6 +394,17 @@ public class Test2 extends Application {
                             board.getChildren().remove(a[row][column]);
                             a[row + 1][column] = n;
                             a[row][column] = null;
+                            System.out.println("\n D");
+                            for(int i = 0; i<4; i++)
+                            {
+                                for(int j = 0; j<4; j++)
+                                {
+                                    System.out.print(a[i][j]);
+                                    System.out.print(" ");
+                                }
+                                System.out.println("\n");
+                            }
+                            System.out.println("-------------");
                         }
                     }
                 }
@@ -296,6 +416,17 @@ public class Test2 extends Application {
                         board.getChildren().remove(a[2][column]);
                         a[3][column] = n;
                         a[2][column] = null;
+                        System.out.println("\n D");
+                        for(int i = 0; i<4; i++)
+                        {
+                            for(int j = 0; j<4; j++)
+                            {
+                                System.out.print(a[i][j]);
+                                System.out.print(" ");
+                            }
+                            System.out.println("\n");
+                        }
+                        System.out.println("-------------");
                     }
                 }
             }

@@ -491,19 +491,11 @@ public class Emma2048 extends Application {
                 for (int row = 0; row < 3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row + 1][column] == null) {
-                            if(a[r][c]==a[row][column]) {
-                                board.getChildren().remove(a[row][column]);
-                                board.add(newBlock, column, row + 1);
-                                a[row + 1][column] = newBlock;
-                                a[row][column] = null;
-                            }
-                            else{
-                                StackPane n = makeS2();
+                                StackPane n = whatTheWhick(a, row, column);
                                 board.add(n, column, row + 1);
                                 board.getChildren().remove(a[row][column]);
                                 a[row + 1][column] = n;
                                 a[row][column] = null;
-                            }
 
                         }
                         else if (a[row][column] != null && a[row+1][column]!= null) {
@@ -524,19 +516,11 @@ public class Emma2048 extends Application {
                 for (int row = 0; row <3; row++) {
                     for (int column = 0; column < 4; column++) {
                         if  (a[row][column] != null && a[row + 1][column] == null) {
-                            if(a[r][c]==a[row][column]) {
-                                board.getChildren().remove(a[row][column]);
-                                board.add(newBlock, column, row + 1);
-                                a[row + 1][column] = newBlock;
-                                a[row][column] = null;
-                            }
-                            else{
                                 StackPane n = makeS2();
                                 board.add(n, column, row + 1);
                                 board.getChildren().remove(a[row][column]);
                                 a[row + 1][column] = n;
                                 a[row][column] = null;
-                            }
                         }
                         else if (a[row][column] != null && a[row+1][column]!= null) {
                             if (a[row][column].getAccessibleText().equals(a[row+1][column].getAccessibleText())) {
