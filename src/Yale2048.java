@@ -15,17 +15,20 @@ import static javafx.scene.input.KeyCode.RIGHT;
 import static javafx.scene.input.KeyCode.UP;
 import static javafx.scene.input.KeyCode.DOWN;
 
+
+
 public class Yale2048 extends Application {
+    private StackPane[][] a = {
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null},
+    };
+    private GridPane board = new GridPane();
     public void start (Stage ps) {
-        StackPane[][] a = {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-        };
+
         BorderPane background = new BorderPane();
 
-        GridPane board = new GridPane();
         board.setStyle("-fx-background-color: #bbada0");
 
         // Top
@@ -154,265 +157,628 @@ public class Yale2048 extends Application {
 
             // What happens if they click the right arrow key
             if (e.getCode() == RIGHT) {
+                int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int row = 0; row < 4; row++) {
                     for (int c = 3; c >= 0; c--) {
                         if (a[row][c] != null && c != 3) {
 
-                            board.add(makeRectangle(), c, row);
-
                             for (int i = c + 1; i < 4; i++) {
                                 if (a[row][i] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {
+                                        ifMoved++;
+                                        ifMerged = true;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), i, row);
                                             board.add(makeS4(), i, row);
                                             a[row][i] = makeS4();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeRectangle(), i, row);
                                             board.add(makeS8(), i, row);
                                             a[row][i] = makeS8();
+                                            a[row][c] = null;
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS16(), i, row);
+                                            a[row][i] = makeS16();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS32(), i, row);
+                                            a[row][i] = makeS32();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS64(), i, row);
+                                            a[row][i] = makeS64();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS128(), i, row);
+                                            a[row][i] = makeS128();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("128")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS256(), i, row);
+                                            a[row][i] = makeS256();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("256")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS512(), i, row);
+                                            a[row][i] = makeS512();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("512")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS1024(), i, row);
+                                            a[row][i] = makeS1024();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("1024")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS2048(), i, row);
+                                            a[row][i] = makeS2048();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+
+
                                         //do 4, 8, 16 etc.
                                     }
-                                    else {
+                                    else if ((c != i - 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) || ifMerged) {
+                                        ifMoved++;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeS2(), i - 1, row);
                                             a[row][i - 1] = makeS2();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS4(), i - 1, row);
                                             a[row][i - 1] = makeS4();
+                                            a[row][c] = null;
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), i - 1, row);
+                                            a[row][i - 1] = makeS8();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), i - 1, row);
+                                            a[row][i - 1] = makeS16();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+
+                                    }
+                                    else if (c == i - 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
+                                        break;
                                     }
                                 }
                                 else if (i == 3 && a[row][i] == null) {
+                                    ifMoved++;
+                                    board.add(makeRectangle(), c, row);
                                     if (a[row][c].getAccessibleText().equals("2")) {
                                         board.add(makeS2(), 3, row);
                                         a[row][i] = makeS2();
+                                        a[row][c] = null;
                                         break;
                                     }
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), 3, row);
                                         a[row][i] = makeS4();
+                                        a[row][c] = null;
                                         break;
                                     }
+                                    else if (a[row][c].getAccessibleText().equals("8")) {
+                                        board.add(makeS8(), 3, row);
+                                        a[row][i] = makeS8();
+                                        a[row][c] = null;
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("16")) {
+                                        board.add(makeS16(), 3, row);
+                                        a[row][i] = makeS16();
+                                        a[row][c] = null;
+                                        break;
+                                    }
+
                                     //do 4, 8, 16 etc.
                                 }
                             }
 
-                            a[row][c] = null;
+                            //a[row][c] = null
 
                         }
                     }
 
+                }
+                if (ifMoved != 0) {
+                    makeNew();
                 }
             }
 
             // What happens if they click the left arrow key
             if (e.getCode() == LEFT) {
+                int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int row = 0; row < 4; row++) {
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null && c != 0) {
 
-                            board.add(makeRectangle(), c, row);
-
 
                             for (int i = c - 1; i >= 0; i--) {
                                 if (a[row][i] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {
+                                        ifMoved++;
+                                        ifMerged = true;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
-                                            board.add(makeRectangle(), i, row);
                                             board.add(makeS4(), i, row);
                                             a[row][i] = makeS4();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
-                                            board.add(makeRectangle(), i, row);
                                             board.add(makeS8(), i, row);
                                             a[row][i] = makeS8();
+                                            a[row][c] = null;
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS16(), i, row);
+                                            a[row][i] = makeS16();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS32(), i, row);
+                                            a[row][i] = makeS32();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS64(), i, row);
+                                            a[row][i] = makeS64();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS128(), i, row);
+                                            a[row][i] = makeS128();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("128")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS256(), i, row);
+                                            a[row][i] = makeS256();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("256")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS512(), i, row);
+                                            a[row][i] = makeS512();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("512")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS1024(), i, row);
+                                            a[row][i] = makeS1024();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("1024")) {
+                                            board.add(makeRectangle(), i, row);
+                                            board.add(makeS2048(), i, row);
+                                            a[row][i] = makeS2048();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+
                                         //do 4, 8, 16 etc.
                                     }
-                                    else {
+                                    else if ((c != i + 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) || ifMerged) {
+                                        ifMoved++;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeS2(), i+1, row);
                                             a[row][i+1] = makeS2();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS4(), i+1, row);
                                             a[row][i+1] = makeS4();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), i + 1, row);
+                                            a[row][i + 1] = makeS8();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), i + 1, row);
+                                            a[row][i + 1] = makeS16();
+                                            a[row][c] = null;
                                             break;
                                         }
 
                                     }
+                                    else if (!(a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) && c == i + 1) {
+                                        break;
+                                    }
+
                                 }
                                 else if (i == 0 && a[row][i] == null) {
+                                    ifMoved++;
+                                    board.add(makeRectangle(), c, row);
                                     if (a[row][c].getAccessibleText().equals("2")) {
                                         board.add(makeS2(), 0, row);
                                         a[row][i] = makeS2();
+                                        a[row][c] = null;
                                         break;
                                     }
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), 0, row);
                                         a[row][i] = makeS4();
+                                        a[row][c] = null;
                                         break;
                                     }
+                                    else if (a[row][c].getAccessibleText().equals("8")) {
+                                        board.add(makeS8(), 0, row);
+                                        a[row][i] = makeS8();
+                                        a[row][c] = null;
+                                        break;
+                                    }
+                                    else if (a[row][c].getAccessibleText().equals("16")) {
+                                        board.add(makeS16(), 0, row);
+                                        a[row][i] = makeS16();
+                                        a[row][c] = null;
+                                        break;
+                                    }
+
                                 }
                             }
 
-                            a[row][c] = null;
+                            //a[row][c] = null;
+
                         }
 
                     }
 
+                }
+                if (ifMoved != 0) {
+                    makeNew();
                 }
             }
 
             // What happens if they click the up arrow key
             if (e.getCode() == UP) {
+                int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int c = 0; c < 4; c++) {
                     for (int row = 0; row < 4; row++) {
                         if (a[row][c] != null && row != 0) {
 
-                            board.add(makeRectangle(), c, row);
-
 
                             for (int i = row - 1; i >= 0; i--) {
                                 if (a[i][c] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged) {
+                                        ifMoved++;
+                                        ifMerged = true;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), c, i);
                                             board.add(makeS4(), c, i);
                                             a[i][c] = makeS4();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeRectangle(), c, i);
                                             board.add(makeS8(), c, i);
                                             a[i][c] = makeS8();
+                                            a[row][c] = null;
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS16(), c, i);
+                                            a[i][c] = makeS16();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS32(), c, i);
+                                            a[i][c] = makeS32();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS64(), c, i);
+                                            a[i][c] = makeS64();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS128(), c, i);
+                                            a[i][c] = makeS128();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("128")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS256(), c, i);
+                                            a[i][c] = makeS256();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("256")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS512(), c, i);
+                                            a[i][c] = makeS512();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("512")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS1024(), c, i);
+                                            a[i][c] = makeS1024();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("1024")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS2048(), c, i);
+                                            a[i][c] = makeS2048();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+
+
                                         //do 4, 8, 16 etc.
                                     }
-                                    else {
+                                    else if ((row != i + 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) || ifMerged) {
+                                        ifMoved++;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeS2(), c, i+1);
                                             a[i+1][c] = makeS2();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS4(), c, i+1);
                                             a[i+1][c] = makeS4();
+                                            a[row][c] = null;
                                             break;
                                         }
 
                                     }
+                                    else if (row == i + 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                        break;
+                                    }
                                 }
                                 else if (i == 0 && a[i][c] == null) {
+                                    ifMoved++;
+                                    board.add(makeRectangle(), c, row);
                                     if (a[row][c].getAccessibleText().equals("2")) {
                                         board.add(makeS2(), c, 0);
                                         a[i][c] = makeS2();
+                                        a[row][c] = null;
                                         break;
                                     }
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), c, 0);
                                         a[i][c] = makeS4();
+                                        a[row][c] = null;
                                         break;
                                     }
+
                                 }
                             }
+                            //a[row][c] = null;
 
-                            a[row][c] = null;
                         }
 
                     }
                 }
+                if (ifMoved != 0) {
+                    makeNew();
+                }
             }
 
-            // What happens if they click the up arrow key
+            // What happens if they click the down arrow key
             if (e.getCode() == DOWN) {
+                int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int c = 0; c < 4; c++) {
-                    for (int row = 0; row < 4; row++) {
+                    for (int row = 3; row >= 0; row--) {
                         if (a[row][c] != null && row != 3) {
-
-                            board.add(makeRectangle(), c, row);
 
 
                             for (int i = row + 1; i < 4; i++) {
                                 if (a[i][c] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged) {
+                                        ifMoved++;
+                                        ifMerged = true;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), c, i);
                                             board.add(makeS4(), c, i);
                                             a[i][c] = makeS4();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeRectangle(), c, i);
                                             board.add(makeS8(), c, i);
                                             a[i][c] = makeS8();
+                                            a[row][c] = null;
                                             break;
                                         }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS16(), c, i);
+                                            a[i][c] = makeS16();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS32(), c, i);
+                                            a[i][c] = makeS32();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("32")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS64(), c, i);
+                                            a[i][c] = makeS64();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("64")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS128(), c, i);
+                                            a[i][c] = makeS128();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("128")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS256(), c, i);
+                                            a[i][c] = makeS256();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("256")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS512(), c, i);
+                                            a[i][c] = makeS512();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("512")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS1024(), c, i);
+                                            a[i][c] = makeS1024();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("1024")) {
+                                            board.add(makeRectangle(), c, i);
+                                            board.add(makeS2048(), c, i);
+                                            a[i][c] = makeS2048();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+
                                         //do 4, 8, 16 etc.
                                     }
-                                    else {
+
+                                    else if ((row != i - 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) || ifMerged) {
+                                        ifMoved++;
+                                        board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeS2(), c, i-1);
                                             a[i-1][c] = makeS2();
+                                            a[row][c] = null;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS4(), c, i-1);
                                             a[i-1][c] = makeS4();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("8")) {
+                                            board.add(makeS8(), c, i-1);
+                                            a[i-1][c] = makeS8();
+                                            a[row][c] = null;
+                                            break;
+                                        }
+                                        else if (a[row][c].getAccessibleText().equals("16")) {
+                                            board.add(makeS16(), c, i-1);
+                                            a[i-1][c] = makeS16();
+                                            a[row][c] = null;
                                             break;
                                         }
 
                                     }
+                                    else if (row == i - 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                        break;
+                                    }
                                 }
                                 else if (i == 3 && a[i][c] == null) {
+                                    ifMoved++;
+                                    board.add(makeRectangle(), c, row);
                                     if (a[row][c].getAccessibleText().equals("2")) {
                                         board.add(makeS2(), c, 3);
                                         a[i][c] = makeS2();
+                                        a[row][c] = null;
                                         break;
                                     }
                                     else if (a[row][c].getAccessibleText().equals("4")) {
                                         board.add(makeS4(), c, 3);
                                         a[i][c] = makeS4();
+                                        a[row][c] = null;
                                         break;
                                     }
+
                                 }
                             }
+                            //a[row][c] = null;
 
-                            a[row][c] = null;
                         }
 
                     }
                 }
+                if (ifMoved > 0) {
+                    makeNew();
+                }
             }
 
-            int twoOrFour = (int)(Math.random()*10 + 1);
-            int r = (int)(Math.random()*4);
-            int c = (int)(Math.random()*4);
-            if (a[r][c] == null) {
-                if (twoOrFour - 10 == 0) {
-                    board.add(makeS4(), c, r);
-                    a[r][c] = makeS4();
+            for (int row = 0; row < 4; row++) {
+                for (int column = 0; column < 4; column++) {
+                    if (a[row][column] == null) {
+                        board.add(makeRectangle(), column, row);
+                    }
                 }
-                else {
-                    board.add(makeS2(), c, r);
-                    a[r][c] = makeS2();
-                }
-
             }
-
-
         });
 
         background.setTop(topBar);
@@ -479,10 +845,188 @@ public class Yale2048 extends Application {
         r.setWidth(79);
         Text t = new Text("8");
         t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t.setFill(Color.web("#776e65"));
+        t.setFill(Color.web("#f9f6f2"));
         StackPane s = new StackPane();
         s.getChildren().addAll(r, t);
         s.setAccessibleText("8");
         return s;
+    }
+
+    public StackPane makeS16() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f59563"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("16");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("16");
+        return s;
+    }
+
+    public StackPane makeS32() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f67c5f"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("32");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("32");
+        return s;
+    }
+
+    public StackPane makeS64() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f65e3b"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("64");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("64");
+        return s;
+    }
+
+    public StackPane makeS128() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#edcf72"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("128");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("128");
+        return s;
+    }
+
+    public StackPane makeS256() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#edcc61"));
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("256");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("256");
+        return s;
+    }
+
+    public StackPane makeS512() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#edc850"));//Change the color to the actual color ya know?
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("512");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("512");
+        return s;
+    }
+
+    public StackPane makeS1024() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#edc53f"));//Change the color to the actual color ya know?
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("1024");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("1024");
+        return s;
+    }
+
+    public StackPane makeS2048() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f65e3b"));//Change the color to the actual color ya know?
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("2048");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("2048");
+        return s;
+    }
+
+    public StackPane makeS4096() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f65e3b"));//Change the color to the actual color ya know?
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("4096");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("4096");
+        return s;
+    }
+
+    public StackPane makeS8192() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#f65e3b"));//Change the color to the actual color ya know?
+        r.setHeight(79);
+        r.setWidth(79);
+        Text t = new Text("8192");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        s.setAccessibleText("8192");
+        return s;
+    }
+
+    public void makeNew() {
+        int twoOrFour = (int)(Math.random()*10 + 1);
+        int r1 = (int)(Math.random()*4);
+        int c1 = (int)(Math.random()*4);
+        while (a[r1][c1] != null) {
+            r1 = (int)(Math.random()*4);
+            c1 = (int)(Math.random()*4);
+        }
+        if (twoOrFour - 10 == 0) {
+            board.add(makeS4(), c1, r1);
+            a[r1][c1] = makeS4();
+        }
+        else {
+            board.add(makeS2(), c1, r1);
+            a[r1][c1] = makeS2();
+        }
     }
 }
