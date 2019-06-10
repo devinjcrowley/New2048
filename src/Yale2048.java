@@ -327,7 +327,7 @@ public class Yale2048 extends Application {
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null && c != 0) {
 
-
+//Eat ass little bitch
                             for (int i = c - 1; i >= 0; i--) {
                                 if (a[row][i] != null) {
                                     if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {

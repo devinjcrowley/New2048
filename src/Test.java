@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,7 +34,7 @@ public class Test extends Application {
 
         // Top
         HBox topBar = new HBox();
-        topBar.setPrefHeight(100);
+        topBar.setPrefHeight(150);
         topBar.setSpacing(200);
         topBar.setAlignment(Pos.CENTER);
         GridPane scoreAndBest = new GridPane();
@@ -57,12 +58,12 @@ public class Test extends Application {
         scoreAndBest.setHgap(20);
         scoreAndBest.setVgap(50);
 
-        scorePane.setPrefHeight(50);
+        scorePane.setPrefHeight(70);
         scorePane.setPrefWidth(75);
         scorePane.getChildren().add(score);
         scorePane.getChildren().add(scoreText);
         scorePane.setAlignment(Pos.CENTER);
-        scorePane.setStyle("-fx-background-color: #bbada0");
+        scorePane.setStyle("-fx-background-color: #bbada0; -fx-background-radius: 10;");
 
         Text bestScore = new Text("Best");
         bestScore.setFont(Font.font("Calibri", 30));
@@ -73,18 +74,24 @@ public class Test extends Application {
         bestScoreText.setFill(Color.web("#ffffff"));
 
         bestScorePane.setPrefWidth(75);
-        bestScorePane.setPrefHeight(50);
+        bestScorePane.setPrefHeight(70);
         bestScorePane.getChildren().add(bestScore);
         bestScorePane.getChildren().add(bestScoreText);
         bestScorePane.setAlignment(Pos.CENTER);
-        bestScorePane.setStyle("-fx-background-color: #bbada0");
+        bestScorePane.setStyle("-fx-background-color: #bbada0; -fx-background-radius: 10;");
+
+        StackPane newGame = makeNewGame();
+        newGame.setOnMouseClicked(e -> resetBoard());
+        newGame.setLayoutX(500);
+        newGame.setLayoutY(100);
+        scoreAndBest.getChildren().add(newGame);
+
 
         topBar.getChildren().addAll(text, scoreAndBest);
 
         //Starting the instructions
         Pane instructionPane = new Pane();
-        instructionPane.prefHeightProperty().bind(board.heightProperty().add(60));
-        instructionPane.prefWidthProperty().bind(background.widthProperty());
+        instructionPane.setPrefHeight(120);
         background.setBottom(instructionPane);
 
         //instruction header text:
@@ -93,7 +100,7 @@ public class Test extends Application {
         instructionsHead.setFill(Color.web("#776e65"));
         instructionsHead.setStroke(Color.web("#776e65"));
         instructionsHead.xProperty().bind(instructionPane.widthProperty().divide(2).subtract(200));
-        instructionsHead.yProperty().bind(instructionPane.heightProperty().subtract(35));
+        instructionsHead.yProperty().bind(instructionPane.heightProperty().divide(2).subtract(20));
 
         //instructions body text:
         Text instructionsOne = new Text("Use your arrow keys to move the tiles.");
@@ -101,7 +108,7 @@ public class Test extends Application {
         instructionsOne.setFill(Color.web("#776e65"));
         instructionsOne.setStroke(Color.web("#776e65"));
         instructionsOne.xProperty().bind(instructionsHead.xProperty().add(130));
-        instructionsOne.yProperty().bind(instructionPane.heightProperty().subtract(35));
+        instructionsOne.yProperty().bind(instructionPane.heightProperty().divide(2).subtract(20));
 
         Text instructionsTwo = new Text("When two tiles with the same " +
                 "number touch, they merge into one!");
@@ -109,7 +116,7 @@ public class Test extends Application {
         instructionsTwo.setFill(Color.web("#776e65"));
         instructionsTwo.setStroke(Color.web("#776e65"));
         instructionsTwo.xProperty().bind(instructionPane.widthProperty().divide(2).subtract(200));
-        instructionsTwo.yProperty().bind(instructionPane.heightProperty().subtract(15));
+        instructionsTwo.yProperty().bind(instructionPane.heightProperty().divide(2).subtract(5));
         instructionPane.getChildren().addAll(instructionsHead, instructionsOne, instructionsTwo);
 
         // Sides
@@ -1150,8 +1157,8 @@ public class Test extends Application {
         background.setLeft(side1);
         background.setRight(side2);
 
-        background.setStyle("-fx-background-color: #F2E2D2");
-        Scene scene = new Scene(background, 600, 550);
+        background.setStyle("-fx-background-color: rgba(242, 226, 210, 0.5)");
+        Scene scene = new Scene(background, 600, 600);
         ps.setTitle("Yale2048");
         ps.setScene(scene);
         ps.show();
@@ -1392,6 +1399,157 @@ public class Test extends Application {
             board.add(makeS2(), c1, r1);
             a[r1][c1] = makeS2();
         }
+    }
+
+    public void gameOver() {
+        boolean allFilled = true;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                if (a[row][column] == null) {
+                    allFilled = false;
+                }
+            }
+        }
+        boolean canMove = false;
+        if (allFilled) {
+            outerLoop:
+            for (int r = 0; r < 4; r++) {
+                for (int c = 0; c < 4; c++) {
+                    if (r == 0) {
+                        if (c == 0) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else if (c == 3) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                    }
+                    if (r == 3) {
+                        if (c == 0) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else if (c == 3) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                    }
+                    if (r == 2) {
+                        if (c == 0) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else if (c == 3) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                    }
+                    if (r == 1) {
+                        if (c == 0) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else if (c == 3) {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                        else {
+                            if (a[r][c].getAccessibleText().equals(a[r][c - 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r + 1][c].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r][c + 1].getAccessibleText()) ||
+                                    a[r][c].getAccessibleText().equals(a[r - 1][c].getAccessibleText())) {
+                                canMove = true;
+                                break outerLoop;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!canMove) {
+            System.exit(0);
+        }
+    }
+
+    public void resetBoard() {
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 4; c++) {
+                a[r][c] = null;
+                board.add(makeRectangle(), r, c);
+            }
+        }
+    }
+
+    public StackPane makeNewGame() {
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#8f7a66"));//Change the color to the actual color ya know?
+        r.setHeight(50);
+        r.setWidth(100);
+        r.setX(100);
+        r.setY(100);
+        Text t = new Text("New Game");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 25));
+        t.setFill(Color.web("#f9f6f2"));
+        StackPane s = new StackPane();
+        s.getChildren().addAll(r, t);
+        return s;
     }
 
 }
