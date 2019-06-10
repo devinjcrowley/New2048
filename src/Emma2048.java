@@ -316,6 +316,7 @@ public class Emma2048 extends Application {
                                 a[row][column] = null;
                             }
                             else{
+                                //i tried
                                 StackPane n = makeS2();
                                 board.add(n, column - 1, row);
                                 board.getChildren().remove(a[row][column]);

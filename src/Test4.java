@@ -30,7 +30,7 @@ public class Test4 extends Application {
     public void start (Stage ps) {
 
         BorderPane background = new BorderPane();
-        StackPane dualCenter = new StackPane();
+        dualCenter = new StackPane();
 
         dualCenter.getChildren().add(board);
 
@@ -1147,6 +1147,7 @@ public class Test4 extends Application {
                 }
             }
             gameOver();
+            Win();
 
             for (int row = 0; row < 4; row++) {
                 for (int column = 0; column < 4; column++) {
@@ -1177,6 +1178,7 @@ public class Test4 extends Application {
         r.setFill(Color.web("#cdc1b4"));
         r.setHeight(79);
         r.setWidth(79);
+        r.setAccessibleText("0");
         return r;
     }
 
@@ -1405,7 +1407,27 @@ public class Test4 extends Application {
             a[r1][c1] = makeS2();
         }
     }
-
+    public void Win(){
+        boolean win = false;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                if (a[row][column] != null && a[row][column].getAccessibleText().equals("8")) {
+                    win = true;
+                }
+            }
+        }
+        if(win){
+            Rectangle winRec = new Rectangle(0,0,340, 340);
+            winRec.setFill(Color.LIGHTYELLOW);
+            winRec.setOpacity(0.3);
+            Text t = new Text("You Win!");
+            t.setFont(Font.font ("Calibri", FontWeight.BOLD, 60));
+            t.setFill(Color.web("#776e65"));
+            StackPane stack = new StackPane();
+            stack.getChildren().addAll(winRec, t);
+            dualCenter.getChildren().add(stack);
+        }
+    }
     public void gameOver() {
         boolean allFilled = true;
         for (int row = 0; row < 4; row++) {
@@ -1528,10 +1550,15 @@ public class Test4 extends Application {
 
         if (!canMove && allFilled) {
             System.out.println("woAH");
-            Rectangle gameOver = new Rectangle(340, 340);
-            gameOver.setFill(Color.WHITE);
-            gameOver.setOpacity(.4);
-            dualCenter.getChildren().add(gameOver);
+            Rectangle gameOver = new Rectangle(0,0,340, 340);
+            gameOver.setFill(Color.LIGHTGRAY);
+            gameOver.setOpacity(0.1);
+            Text t = new Text("Game Over!");
+            t.setFont(Font.font ("Calibri", FontWeight.BOLD, 60));
+            t.setFill(Color.web("#776e65"));
+            StackPane stack = new StackPane();
+            stack.getChildren().addAll(gameOver, t);
+            dualCenter.getChildren().add(stack);
         }
     }
 

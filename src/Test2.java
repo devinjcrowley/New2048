@@ -437,7 +437,7 @@ public class Test2 extends Application {
                 c = (int)(int)(Math.random()*4);
             }
             StackPane newBlock = makeRandom();
-            board.add(newBlock, r, c);
+            board.add(newBlock, c, r);
             a[r][c]=newBlock;
         });
 
