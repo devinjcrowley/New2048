@@ -1607,24 +1607,63 @@ public class Test extends Application {
     public StackPane makeGameOverScreen() {
         Rectangle gameOver = new Rectangle(0,0,340, 340);
         gameOver.setFill(Color.LIGHTGRAY);
-        gameOver.setOpacity(0.1);
+        gameOver.setOpacity(0.5);
         Text t = new Text("Game Over!");
         t.setFont(Font.font ("Calibri", FontWeight.BOLD, 60));
         t.setFill(Color.web("#776e65"));
+
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#8f7a66"));//Change the color to the actual color ya know?
+        r.setHeight(50);
+        r.setWidth(140);
+        Text nt = new Text("Try again");
+        nt.setFont(Font.font ("Calibri", FontWeight.BOLD, 25));
+        nt.setFill(Color.web("#f9f6f2"));
+        StackPane tryAgain = new StackPane();
+        tryAgain.getChildren().addAll(r, nt);
+        tryAgain.setOnMouseClicked(e -> resetBoard());
+
+        Pane forButton = new Pane();
+        forButton.getChildren().add(tryAgain);
+        tryAgain.setLayoutX(100);
+        tryAgain.setLayoutY(200);
+
         StackPane stack = new StackPane();
-        stack.getChildren().addAll(gameOver, t);
+        stack.getChildren().addAll(gameOver, t, forButton);
+
         return stack;
     }
 
     public StackPane makeWinScreen() {
         Rectangle winRec = new Rectangle(0,0,340, 340);
         winRec.setFill(Color.LIGHTYELLOW);
-        winRec.setOpacity(0.3);
+        winRec.setOpacity(0.5);
         Text t = new Text("You Win!");
         t.setFont(Font.font ("Calibri", FontWeight.BOLD, 60));
         t.setFill(Color.web("#776e65"));
+
+        Rectangle r = new Rectangle();
+        r.setArcHeight(10);
+        r.setArcWidth(10);
+        r.setFill(Color.web("#8f7a66"));//Change the color to the actual color ya know?
+        r.setHeight(50);
+        r.setWidth(140);
+        Text nt = new Text("Try again");
+        nt.setFont(Font.font ("Calibri", FontWeight.BOLD, 25));
+        nt.setFill(Color.web("#f9f6f2"));
+        StackPane tryAgain = new StackPane();
+        tryAgain.getChildren().addAll(r, nt);
+        tryAgain.setOnMouseClicked(e -> resetBoard());
+
+        Pane forButton = new Pane();
+        forButton.getChildren().add(tryAgain);
+        tryAgain.setLayoutX(100);
+        tryAgain.setLayoutY(200);
+
         StackPane stack = new StackPane();
-        stack.getChildren().addAll(winRec, t);
+        stack.getChildren().addAll(winRec, t, forButton);
         return stack;
     }
 
