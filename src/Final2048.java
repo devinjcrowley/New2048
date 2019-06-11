@@ -163,6 +163,7 @@ public class Final2048 extends Application {
                 a[row][column] = makeS2();
             }
             board.add(a[row][column], column, row);
+
         }
 
         if (score >= bestScore) {
@@ -179,44 +180,23 @@ public class Final2048 extends Application {
                 boolean ifMerged = false;
                 for (int row = 0; row < 4; row++) {
                     boolean fourInARow = false;
+                    boolean twoAndTwo = false;
                     if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][2].getAccessibleText().equals(a[row][1].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
                         fourInARow = true;
-                        if (a[row][3].getAccessibleText().equals("2")) {
-                            a[row][0] = null;
-                            a[row][1] = null;
-                            a[row][2] = makeS4();
-                            a[row][3] = makeS4();
-                            board.add(a[row][2], 2, row);
-                            board.add(a[row][3], 3, row);
-                            score += 8;
-                        }
-                        else if (a[row][3].getAccessibleText().equals("4")) {
-                            a[row][0] = null;
-                            a[row][1] = null;
-                            a[row][2] = makeS8();
-                            a[row][3] = makeS8();
-                            board.add(a[row][2], 2, row);
-                            board.add(a[row][3], 3, row);
-                            score += 16;
-                        }
-                        else if (a[row][3].getAccessibleText().equals("8")) {
-                            a[row][0] = null;
-                            a[row][1] = null;
-                            a[row][2] = makeS16();
-                            a[row][3] = makeS16();
-                            board.add(a[row][2], 2, row);
-                            board.add(a[row][3], 3, row);
-                            score += 32;
-                        }
+                    }
+                    if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
+                        twoAndTwo = true;
                     }
                     for (int c = 3; c >= 0; c--) {
                         if (a[row][c] != null && c != 3) {
-
                             for (int i = c + 1; i < 4; i++) {
                                 if (a[row][i] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged && !fourInARow) {
+                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
                                         ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), i, row);
@@ -468,35 +448,12 @@ public class Final2048 extends Application {
                 boolean ifMerged = false;
                 for (int row = 0; row < 4; row++) {
                     boolean fourInARow = false;
+                    boolean twoAndTwo = false;
                     if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][2].getAccessibleText().equals(a[row][1].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
                         fourInARow = true;
-                        if (a[row][3].getAccessibleText().equals("2")) {
-                            a[row][0] = makeS4();
-                            a[row][1] = makeS4();
-                            a[row][2] = null;
-                            a[row][3] = null;
-                            board.add(a[row][0], 1, row);
-                            board.add(a[row][1], 1, row);
-                            score += 8;
-                        }
-                        else if (a[row][3].getAccessibleText().equals("4")) {
-                            a[row][0] = makeS8();
-                            a[row][1] = makeS8();
-                            a[row][2] = null;
-                            a[row][3] = null;
-                            board.add(a[row][0], 1, row);
-                            board.add(a[row][1], 1, row);
-                            score += 16;
-                        }
-                        else if (a[row][3].getAccessibleText().equals("8")) {
-                            a[row][0] = makeS16();
-                            a[row][1] = makeS16();
-                            a[row][2] = null;
-                            a[row][3] = null;
-                            board.add(a[row][0], 1, row);
-                            board.add(a[row][1], 1, row);
-                            score += 32;
-                        }
+                    }
+                    if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
+                        twoAndTwo = true;
                     }
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null && c != 0) {
@@ -504,9 +461,12 @@ public class Final2048 extends Application {
 
                             for (int i = c - 1; i >= 0; i--) {
                                 if (a[row][i] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged && !fourInARow) {
+                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
                                         ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeS4(), i, row);
@@ -756,35 +716,12 @@ public class Final2048 extends Application {
                 boolean ifMerged = false;
                 for (int c = 0; c < 4; c++) {
                     boolean fourInARow = false;
+                    boolean twoAndTwo = false;
                     if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[2][c].getAccessibleText().equals(a[1][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
                         fourInARow = true;
-                        if (a[3][c].getAccessibleText().equals("2")) {
-                            a[0][c] = makeS4();
-                            a[1][c] = makeS4();
-                            a[2][c] = null;
-                            a[3][c] = null;
-                            board.add(a[0][c], c, 0);
-                            board.add(a[1][c], c, 1);
-                            score += 8;
-                        }
-                        else if (a[3][c].getAccessibleText().equals("4")) {
-                            a[0][c] = makeS8();
-                            a[1][c] = makeS8();
-                            a[2][c] = null;
-                            a[3][c] = null;
-                            board.add(a[0][c], c, 0);
-                            board.add(a[1][c], c, 1);
-                            score += 16;
-                        }
-                        else if (a[3][c].getAccessibleText().equals("8")) {
-                            a[0][c] = makeS16();
-                            a[1][c] = makeS16();
-                            a[2][c] = null;
-                            a[3][c] = null;
-                            board.add(a[0][c], c, 0);
-                            board.add(a[1][c], c, 1);
-                            score += 32;
-                        }
+                    }
+                    if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
+                        twoAndTwo = true;
                     }
                     for (int row = 0; row < 4; row++) {
                         if (a[row][c] != null && row != 0) {
@@ -792,9 +729,12 @@ public class Final2048 extends Application {
 
                             for (int i = row - 1; i >= 0; i--) {
                                 if (a[i][c] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged && !fourInARow) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
                                         ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), c, i);
@@ -1045,35 +985,12 @@ public class Final2048 extends Application {
                 boolean ifMerged = false;
                 for (int c = 0; c < 4; c++) {
                     boolean fourInARow = false;
+                    boolean twoAndTwo = false;
                     if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[2][c].getAccessibleText().equals(a[1][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
                         fourInARow = true;
-                        if (a[3][c].getAccessibleText().equals("2")) {
-                            a[0][c] = null;
-                            a[1][c] = null;
-                            a[2][c] = makeS4();
-                            a[3][c] = makeS4();
-                            board.add(a[2][c], c, 2);
-                            board.add(a[3][c], c, 3);
-                            score += 8;
-                        }
-                        else if (a[3][c].getAccessibleText().equals("4")) {
-                            a[0][c] = null;
-                            a[1][c] = null;
-                            a[2][c] = makeS8();
-                            a[3][c] = makeS8();
-                            board.add(a[2][c], c, 2);
-                            board.add(a[3][c], c, 3);
-                            score += 16;
-                        }
-                        else if (a[3][c].getAccessibleText().equals("8")) {
-                            a[0][c] = null;
-                            a[1][c] = null;
-                            a[2][c] = makeS16();
-                            a[3][c] = makeS16();
-                            board.add(a[2][c], c, 2);
-                            board.add(a[3][c], c, 3);
-                            score += 32;
-                        }
+                    }
+                    if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
+                        twoAndTwo = true;
                     }
                     for (int row = 3; row >= 0; row--) {
                         if (a[row][c] != null && row != 3) {
@@ -1081,9 +998,12 @@ public class Final2048 extends Application {
 
                             for (int i = row + 1; i < 4; i++) {
                                 if (a[i][c] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged && !fourInARow) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
                                         ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), c, i);
@@ -1353,7 +1273,7 @@ public class Final2048 extends Application {
 
         background.setStyle("-fx-background-color: rgba(242, 226, 210, 0.5)");
         Scene scene = new Scene(wholeThing, 600, 600);
-        ps.setTitle("2048");
+        ps.setTitle("Test4");
         ps.setScene(scene);
         ps.show();
         board.requestFocus();

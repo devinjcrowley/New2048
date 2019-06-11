@@ -163,6 +163,7 @@ public class Test extends Application {
                 a[row][column] = makeS2();
             }
             board.add(a[row][column], column, row);
+
         }
 
         if (score >= bestScore) {
@@ -176,14 +177,26 @@ public class Test extends Application {
             // What happens if they click the right arrow key
             if (e.getCode() == RIGHT) {
                 int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int row = 0; row < 4; row++) {
+                    boolean fourInARow = false;
+                    boolean twoAndTwo = false;
+                    if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][2].getAccessibleText().equals(a[row][1].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
+                        fourInARow = true;
+                    }
+                    if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
+                        twoAndTwo = true;
+                    }
                     for (int c = 3; c >= 0; c--) {
                         if (a[row][c] != null && c != 3) {
-
                             for (int i = c + 1; i < 4; i++) {
                                 if (a[row][i] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
+                                        ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), i, row);
@@ -269,7 +282,7 @@ public class Test extends Application {
 
                                         //do 4, 8, 16 etc.
                                     }
-                                    else if ((c != i - 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()))) {
+                                    else if ((c != i - 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) || (ifMerged && c != i-1)) {
                                         ifMoved++;
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
@@ -422,7 +435,7 @@ public class Test extends Application {
 
                         }
                     }
-
+                    ifMerged = false;
                 }
                 if (ifMoved != 0) {
                     makeNew();
@@ -432,15 +445,28 @@ public class Test extends Application {
             // What happens if they click the left arrow key
             if (e.getCode() == LEFT) {
                 int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int row = 0; row < 4; row++) {
+                    boolean fourInARow = false;
+                    boolean twoAndTwo = false;
+                    if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][2].getAccessibleText().equals(a[row][1].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
+                        fourInARow = true;
+                    }
+                    if (a[row][3] != null && a[row][2] != null && a[row][1] != null && a[row][0] != null && a[row][3].getAccessibleText().equals(a[row][2].getAccessibleText()) && a[row][1].getAccessibleText().equals(a[row][0].getAccessibleText())) {
+                        twoAndTwo = true;
+                    }
                     for (int c = 0; c < 4; c++) {
                         if (a[row][c] != null && c != 0) {
 
 
                             for (int i = c - 1; i >= 0; i--) {
                                 if (a[row][i] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
+                                        ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeS4(), i, row);
@@ -523,7 +549,7 @@ public class Test extends Application {
 
                                         //do 4, 8, 16 etc.
                                     }
-                                    else if ((c != i + 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText()))) {
+                                    else if ((c != i + 1 && !a[row][c].getAccessibleText().equals(a[row][i].getAccessibleText())) || (ifMerged && c != i+1)) {
                                         ifMoved++;
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
@@ -677,7 +703,7 @@ public class Test extends Application {
                         }
 
                     }
-
+                    ifMerged = false;
                 }
                 if (ifMoved != 0) {
                     makeNew();
@@ -687,15 +713,28 @@ public class Test extends Application {
             // What happens if they click the up arrow key
             if (e.getCode() == UP) {
                 int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int c = 0; c < 4; c++) {
+                    boolean fourInARow = false;
+                    boolean twoAndTwo = false;
+                    if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[2][c].getAccessibleText().equals(a[1][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
+                        fourInARow = true;
+                    }
+                    if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
+                        twoAndTwo = true;
+                    }
                     for (int row = 0; row < 4; row++) {
                         if (a[row][c] != null && row != 0) {
 
 
                             for (int i = row - 1; i >= 0; i--) {
                                 if (a[i][c] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
+                                        ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), c, i);
@@ -781,7 +820,7 @@ public class Test extends Application {
 
                                         //do 4, 8, 16 etc.
                                     }
-                                    else if ((row != i + 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()))) {
+                                    else if ((row != i + 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) || (ifMerged && row != i + 1)) {
                                         ifMoved++;
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
@@ -933,6 +972,7 @@ public class Test extends Application {
                         }
 
                     }
+                    ifMerged = false;
                 }
                 if (ifMoved != 0) {
                     makeNew();
@@ -942,15 +982,28 @@ public class Test extends Application {
             // What happens if they click the down arrow key
             if (e.getCode() == DOWN) {
                 int ifMoved = 0;
+                boolean ifMerged = false;
                 for (int c = 0; c < 4; c++) {
+                    boolean fourInARow = false;
+                    boolean twoAndTwo = false;
+                    if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[2][c].getAccessibleText().equals(a[1][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
+                        fourInARow = true;
+                    }
+                    if (a[3][c] != null && a[2][c] != null && a[1][c] != null && a[0][c] != null && a[3][c].getAccessibleText().equals(a[2][c].getAccessibleText()) && a[1][c].getAccessibleText().equals(a[0][c].getAccessibleText())) {
+                        twoAndTwo = true;
+                    }
                     for (int row = 3; row >= 0; row--) {
                         if (a[row][c] != null && row != 3) {
 
 
                             for (int i = row + 1; i < 4; i++) {
                                 if (a[i][c] != null) {
-                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) {
+                                    if (a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()) && !ifMerged) {
                                         ifMoved++;
+                                        ifMerged = true;
+                                        if (fourInARow || twoAndTwo) {
+                                            ifMerged = false;
+                                        }
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), c, i);
@@ -1036,7 +1089,7 @@ public class Test extends Application {
                                         //do 4, 8, 16 etc.
                                     }
 
-                                    else if ((row != i - 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText()))) {
+                                    else if ((row != i - 1 && !a[row][c].getAccessibleText().equals(a[i][c].getAccessibleText())) || (ifMerged && row != i - 1)) {
                                         ifMoved++;
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
@@ -1188,6 +1241,7 @@ public class Test extends Application {
                         }
 
                     }
+                    ifMerged = false;
                 }
                 if (ifMoved > 0) {
                     makeNew();
