@@ -26,9 +26,24 @@ public class Test extends Application {
             {null, null, null, null},
     };
     private GridPane board = new GridPane();
+    private StackPane dualCenter = new StackPane();
+    private StackPane gos = makeGameOverScreen();
+    private StackPane ws = makeWinScreen();
+
+    private int score = 0;
+    private int bestScore = 0;
+
+    private Text scoreText = new Text(String.valueOf(score));
+
+
+
     public void start (Stage ps) {
+        Pane wholeThing = new Pane();
 
         BorderPane background = new BorderPane();
+        dualCenter = new StackPane();
+
+        dualCenter.getChildren().add(board);
 
         board.setStyle("-fx-background-color: #bbada0");
 
@@ -45,11 +60,10 @@ public class Test extends Application {
         text.setFont(Font.font("Calibri", FontWeight.BOLD, 80));
         text.setFill(Color.web("#776e65"));
 
-        Text score = new Text("Score");
-        score.setFont(Font.font("Calibri", 30));
-        score.setFill(Color.web("#eee4da"));
+        Text scoreLabel = new Text("Score");
+        scoreLabel.setFont(Font.font("Calibri", 30));
+        scoreLabel.setFill(Color.web("#eee4da"));
 
-        Text scoreText = new Text("0");
         scoreText.setFont(Font.font("Calibri", 30));
         scoreText.setFill(Color.web("#ffffff"));
 
@@ -60,32 +74,25 @@ public class Test extends Application {
 
         scorePane.setPrefHeight(70);
         scorePane.setPrefWidth(75);
-        scorePane.getChildren().add(score);
+        scorePane.getChildren().add(scoreLabel);
         scorePane.getChildren().add(scoreText);
         scorePane.setAlignment(Pos.CENTER);
         scorePane.setStyle("-fx-background-color: #bbada0; -fx-background-radius: 10;");
 
-        Text bestScore = new Text("Best");
-        bestScore.setFont(Font.font("Calibri", 30));
-        bestScore.setFill(Color.web("#eee4da"));
+        Text bestScoreLabel = new Text("Best");
+        bestScoreLabel.setFont(Font.font("Calibri", 30));
+        bestScoreLabel.setFill(Color.web("#eee4da"));
 
-        Text bestScoreText = new Text("0");
+        Text bestScoreText = new Text(String.valueOf(bestScore));
         bestScoreText.setFont(Font.font("Calibri", 30));
         bestScoreText.setFill(Color.web("#ffffff"));
 
         bestScorePane.setPrefWidth(75);
         bestScorePane.setPrefHeight(70);
-        bestScorePane.getChildren().add(bestScore);
+        bestScorePane.getChildren().add(bestScoreLabel);
         bestScorePane.getChildren().add(bestScoreText);
         bestScorePane.setAlignment(Pos.CENTER);
         bestScorePane.setStyle("-fx-background-color: #bbada0; -fx-background-radius: 10;");
-
-        StackPane newGame = makeNewGame();
-        newGame.setOnMouseClicked(e -> resetBoard());
-        newGame.setLayoutX(500);
-        newGame.setLayoutY(100);
-        scoreAndBest.getChildren().add(newGame);
-
 
         topBar.getChildren().addAll(text, scoreAndBest);
 
@@ -133,7 +140,7 @@ public class Test extends Application {
         board.setVgap(5);
         board.setPadding(new Insets(5, 5, 5, 5));
 
-        background.setCenter(board);
+        background.setCenter(dualCenter);
 
         for (int row=0; row<4; row++) {
             for (int column = 0; column < 4; column++) {
@@ -150,15 +157,19 @@ public class Test extends Application {
                 row = (int)(Math.random()*4);
             }
             if (twoOrFour - 10 == 0) {
-                StackPane s4 = makeS4();
-                a[row][column] = s4;
+                a[row][column] = makeS4();
             }
             else {
-                StackPane s2 = makeS2();
-                a[row][column] = s2;
+                a[row][column] = makeS2();
             }
             board.add(a[row][column], column, row);
         }
+
+        if (score >= bestScore) {
+            bestScore = score;
+        }
+        scoreText.setText(String.valueOf(score));
+        bestScoreText.setText(String.valueOf(bestScore));
 
         board.setOnKeyPressed(e -> {
 
@@ -176,30 +187,34 @@ public class Test extends Application {
                                         board.add(makeRectangle(), c, row);
                                         if (a[row][c].getAccessibleText().equals("2")) {
                                             board.add(makeRectangle(), i, row);
-                                            board.add(makeS4(), i, row);
                                             a[row][i] = makeS4();
+                                            board.add(a[row][i], i, row);
                                             a[row][c] = null;
+                                            score += 4;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeRectangle(), i, row);
-                                            board.add(makeS8(), i, row);
                                             a[row][i] = makeS8();
+                                            board.add(a[row][i], i, row);
                                             a[row][c] = null;
+                                            score += 8;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("8")) {
                                             board.add(makeRectangle(), i, row);
-                                            board.add(makeS16(), i, row);
                                             a[row][i] = makeS16();
+                                            board.add(a[row][i], i, row);
                                             a[row][c] = null;
+                                            score += 16;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("16")) {
                                             board.add(makeRectangle(), i, row);
-                                            board.add(makeS32(), i, row);
                                             a[row][i] = makeS32();
+                                            board.add(a[row][i], i, row);
                                             a[row][c] = null;
+                                            score += 32;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("32")) {
@@ -207,6 +222,7 @@ public class Test extends Application {
                                             board.add(makeS64(), i, row);
                                             a[row][i] = makeS64();
                                             a[row][c] = null;
+                                            score += 64;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("64")) {
@@ -214,6 +230,7 @@ public class Test extends Application {
                                             board.add(makeS128(), i, row);
                                             a[row][i] = makeS128();
                                             a[row][c] = null;
+                                            score += 128;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("128")) {
@@ -221,6 +238,7 @@ public class Test extends Application {
                                             board.add(makeS256(), i, row);
                                             a[row][i] = makeS256();
                                             a[row][c] = null;
+                                            score += 256;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("256")) {
@@ -228,6 +246,7 @@ public class Test extends Application {
                                             board.add(makeS512(), i, row);
                                             a[row][i] = makeS512();
                                             a[row][c] = null;
+                                            score += 512;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("512")) {
@@ -235,6 +254,7 @@ public class Test extends Application {
                                             board.add(makeS1024(), i, row);
                                             a[row][i] = makeS1024();
                                             a[row][c] = null;
+                                            score += 1024;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("1024")) {
@@ -242,6 +262,7 @@ public class Test extends Application {
                                             board.add(makeS2048(), i, row);
                                             a[row][i] = makeS2048();
                                             a[row][c] = null;
+                                            score += 2048;
                                             break;
                                         }
 
@@ -425,12 +446,14 @@ public class Test extends Application {
                                             board.add(makeS4(), i, row);
                                             a[row][i] = makeS4();
                                             a[row][c] = null;
+                                            score += 4;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
                                             board.add(makeS8(), i, row);
                                             a[row][i] = makeS8();
                                             a[row][c] = null;
+                                            score += 8;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("8")) {
@@ -438,6 +461,7 @@ public class Test extends Application {
                                             board.add(makeS16(), i, row);
                                             a[row][i] = makeS16();
                                             a[row][c] = null;
+                                            score += 16;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("16")) {
@@ -445,6 +469,7 @@ public class Test extends Application {
                                             board.add(makeS32(), i, row);
                                             a[row][i] = makeS32();
                                             a[row][c] = null;
+                                            score += 32;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("32")) {
@@ -452,6 +477,7 @@ public class Test extends Application {
                                             board.add(makeS64(), i, row);
                                             a[row][i] = makeS64();
                                             a[row][c] = null;
+                                            score += 64;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("64")) {
@@ -459,6 +485,7 @@ public class Test extends Application {
                                             board.add(makeS128(), i, row);
                                             a[row][i] = makeS128();
                                             a[row][c] = null;
+                                            score += 128;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("128")) {
@@ -466,6 +493,7 @@ public class Test extends Application {
                                             board.add(makeS256(), i, row);
                                             a[row][i] = makeS256();
                                             a[row][c] = null;
+                                            score += 256;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("256")) {
@@ -473,6 +501,7 @@ public class Test extends Application {
                                             board.add(makeS512(), i, row);
                                             a[row][i] = makeS512();
                                             a[row][c] = null;
+                                            score += 512;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("512")) {
@@ -480,6 +509,7 @@ public class Test extends Application {
                                             board.add(makeS1024(), i, row);
                                             a[row][i] = makeS1024();
                                             a[row][c] = null;
+                                            score += 1024;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("1024")) {
@@ -487,6 +517,7 @@ public class Test extends Application {
                                             board.add(makeS2048(), i, row);
                                             a[row][i] = makeS2048();
                                             a[row][c] = null;
+                                            score += 2048;
                                             break;
                                         }
 
@@ -671,6 +702,7 @@ public class Test extends Application {
                                             board.add(makeS4(), c, i);
                                             a[i][c] = makeS4();
                                             a[row][c] = null;
+                                            score += 4;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
@@ -678,6 +710,7 @@ public class Test extends Application {
                                             board.add(makeS8(), c, i);
                                             a[i][c] = makeS8();
                                             a[row][c] = null;
+                                            score += 8;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("8")) {
@@ -685,6 +718,7 @@ public class Test extends Application {
                                             board.add(makeS16(), c, i);
                                             a[i][c] = makeS16();
                                             a[row][c] = null;
+                                            score += 16;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("16")) {
@@ -692,6 +726,7 @@ public class Test extends Application {
                                             board.add(makeS32(), c, i);
                                             a[i][c] = makeS32();
                                             a[row][c] = null;
+                                            score += 32;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("32")) {
@@ -699,6 +734,7 @@ public class Test extends Application {
                                             board.add(makeS64(), c, i);
                                             a[i][c] = makeS64();
                                             a[row][c] = null;
+                                            score += 64;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("64")) {
@@ -706,6 +742,7 @@ public class Test extends Application {
                                             board.add(makeS128(), c, i);
                                             a[i][c] = makeS128();
                                             a[row][c] = null;
+                                            score += 128;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("128")) {
@@ -713,6 +750,7 @@ public class Test extends Application {
                                             board.add(makeS256(), c, i);
                                             a[i][c] = makeS256();
                                             a[row][c] = null;
+                                            score += 256;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("256")) {
@@ -720,6 +758,7 @@ public class Test extends Application {
                                             board.add(makeS512(), c, i);
                                             a[i][c] = makeS512();
                                             a[row][c] = null;
+                                            score += 512;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("512")) {
@@ -727,6 +766,7 @@ public class Test extends Application {
                                             board.add(makeS1024(), c, i);
                                             a[i][c] = makeS1024();
                                             a[row][c] = null;
+                                            score += 1024;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("1024")) {
@@ -734,6 +774,7 @@ public class Test extends Application {
                                             board.add(makeS2048(), c, i);
                                             a[i][c] = makeS2048();
                                             a[row][c] = null;
+                                            score += 2048;
                                             break;
                                         }
 
@@ -916,6 +957,7 @@ public class Test extends Application {
                                             board.add(makeS4(), c, i);
                                             a[i][c] = makeS4();
                                             a[row][c] = null;
+                                            score += 4;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("4")) {
@@ -923,6 +965,7 @@ public class Test extends Application {
                                             board.add(makeS8(), c, i);
                                             a[i][c] = makeS8();
                                             a[row][c] = null;
+                                            score += 8;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("8")) {
@@ -930,6 +973,7 @@ public class Test extends Application {
                                             board.add(makeS16(), c, i);
                                             a[i][c] = makeS16();
                                             a[row][c] = null;
+                                            score += 16;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("16")) {
@@ -937,6 +981,7 @@ public class Test extends Application {
                                             board.add(makeS32(), c, i);
                                             a[i][c] = makeS32();
                                             a[row][c] = null;
+                                            score += 32;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("32")) {
@@ -944,6 +989,7 @@ public class Test extends Application {
                                             board.add(makeS64(), c, i);
                                             a[i][c] = makeS64();
                                             a[row][c] = null;
+                                            score += 64;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("64")) {
@@ -951,6 +997,7 @@ public class Test extends Application {
                                             board.add(makeS128(), c, i);
                                             a[i][c] = makeS128();
                                             a[row][c] = null;
+                                            score += 128;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("128")) {
@@ -958,6 +1005,7 @@ public class Test extends Application {
                                             board.add(makeS256(), c, i);
                                             a[i][c] = makeS256();
                                             a[row][c] = null;
+                                            score += 256;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("256")) {
@@ -965,6 +1013,7 @@ public class Test extends Application {
                                             board.add(makeS512(), c, i);
                                             a[i][c] = makeS512();
                                             a[row][c] = null;
+                                            score += 512;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("512")) {
@@ -972,6 +1021,7 @@ public class Test extends Application {
                                             board.add(makeS1024(), c, i);
                                             a[i][c] = makeS1024();
                                             a[row][c] = null;
+                                            score += 1024;
                                             break;
                                         }
                                         else if (a[row][c].getAccessibleText().equals("1024")) {
@@ -979,6 +1029,7 @@ public class Test extends Application {
                                             board.add(makeS2048(), c, i);
                                             a[i][c] = makeS2048();
                                             a[row][c] = null;
+                                            score += 2048;
                                             break;
                                         }
 
@@ -1142,6 +1193,13 @@ public class Test extends Application {
                     makeNew();
                 }
             }
+            if (score >= bestScore) {
+                bestScore = score;
+            }
+            scoreText.setText(String.valueOf(score));
+            bestScoreText.setText(String.valueOf(bestScore));
+            gameOver();
+            Win();
 
             for (int row = 0; row < 4; row++) {
                 for (int column = 0; column < 4; column++) {
@@ -1157,9 +1215,11 @@ public class Test extends Application {
         background.setLeft(side1);
         background.setRight(side2);
 
+        wholeThing.getChildren().addAll(background, makeNewGameButton());
+
         background.setStyle("-fx-background-color: rgba(242, 226, 210, 0.5)");
-        Scene scene = new Scene(background, 600, 600);
-        ps.setTitle("Yale2048");
+        Scene scene = new Scene(wholeThing, 600, 600);
+        ps.setTitle("Test4");
         ps.setScene(scene);
         ps.show();
         board.requestFocus();
@@ -1172,6 +1232,7 @@ public class Test extends Application {
         r.setFill(Color.web("#cdc1b4"));
         r.setHeight(79);
         r.setWidth(79);
+        r.setAccessibleText("0");
         return r;
     }
 
@@ -1327,7 +1388,7 @@ public class Test extends Application {
         r.setHeight(79);
         r.setWidth(79);
         Text t = new Text("1024");
-        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 35));
         t.setFill(Color.web("#f9f6f2"));
         StackPane s = new StackPane();
         s.getChildren().addAll(r, t);
@@ -1343,45 +1404,14 @@ public class Test extends Application {
         r.setHeight(79);
         r.setWidth(79);
         Text t = new Text("2048");
-        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t.setFill(Color.web("#f9f6f2"));
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 35));
+        t.setFill(Color.web("#edc22e"));
         StackPane s = new StackPane();
         s.getChildren().addAll(r, t);
         s.setAccessibleText("2048");
         return s;
     }
 
-    public StackPane makeS4096() {
-        Rectangle r = new Rectangle();
-        r.setArcHeight(10);
-        r.setArcWidth(10);
-        r.setFill(Color.web("#f65e3b"));//Change the color to the actual color ya know?
-        r.setHeight(79);
-        r.setWidth(79);
-        Text t = new Text("4096");
-        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t.setFill(Color.web("#f9f6f2"));
-        StackPane s = new StackPane();
-        s.getChildren().addAll(r, t);
-        s.setAccessibleText("4096");
-        return s;
-    }
-
-    public StackPane makeS8192() {
-        Rectangle r = new Rectangle();
-        r.setArcHeight(10);
-        r.setArcWidth(10);
-        r.setFill(Color.web("#f65e3b"));//Change the color to the actual color ya know?
-        r.setHeight(79);
-        r.setWidth(79);
-        Text t = new Text("8192");
-        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 40));
-        t.setFill(Color.web("#f9f6f2"));
-        StackPane s = new StackPane();
-        s.getChildren().addAll(r, t);
-        s.setAccessibleText("8192");
-        return s;
-    }
 
     public void makeNew() {
         int twoOrFour = (int)(Math.random()*10 + 1);
@@ -1392,12 +1422,26 @@ public class Test extends Application {
             c1 = (int)(Math.random()*4);
         }
         if (twoOrFour - 10 == 0) {
-            board.add(makeS4(), c1, r1);
             a[r1][c1] = makeS4();
         }
         else {
-            board.add(makeS2(), c1, r1);
             a[r1][c1] = makeS2();
+        }
+        board.add(a[r1][c1], c1, r1);
+        scoreText.setText(String.valueOf(score));
+    }
+
+    public void Win(){
+        boolean win = false;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                if (a[row][column] != null && a[row][column].getAccessibleText().equals("2048")) {
+                    win = true;
+                }
+            }
+        }
+        if(win){
+            dualCenter.getChildren().add(ws);
         }
     }
 
@@ -1521,8 +1565,8 @@ public class Test extends Application {
             }
         }
 
-        if (!canMove) {
-            System.exit(0);
+        if (!canMove && allFilled) {
+            dualCenter.getChildren().add(gos);
         }
     }
 
@@ -1533,23 +1577,55 @@ public class Test extends Application {
                 board.add(makeRectangle(), r, c);
             }
         }
+        score = 0;
+        scoreText.setText(String.valueOf(score));
+
+        dualCenter.getChildren().remove(gos);
+        dualCenter.getChildren().remove(ws);
+        makeNew();
+        makeNew();
     }
 
-    public StackPane makeNewGame() {
+    public StackPane makeNewGameButton() {
         Rectangle r = new Rectangle();
         r.setArcHeight(10);
         r.setArcWidth(10);
         r.setFill(Color.web("#8f7a66"));//Change the color to the actual color ya know?
         r.setHeight(50);
-        r.setWidth(100);
-        r.setX(100);
-        r.setY(100);
+        r.setWidth(140);
         Text t = new Text("New Game");
         t.setFont(Font.font ("Calibri", FontWeight.BOLD, 25));
         t.setFill(Color.web("#f9f6f2"));
         StackPane s = new StackPane();
         s.getChildren().addAll(r, t);
+        s.setOnMouseClicked(e -> resetBoard());
+        s.setLayoutY(90);
+        s.setLayoutX(415);
         return s;
+    }
+
+    public StackPane makeGameOverScreen() {
+        Rectangle gameOver = new Rectangle(0,0,340, 340);
+        gameOver.setFill(Color.LIGHTGRAY);
+        gameOver.setOpacity(0.1);
+        Text t = new Text("Game Over!");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 60));
+        t.setFill(Color.web("#776e65"));
+        StackPane stack = new StackPane();
+        stack.getChildren().addAll(gameOver, t);
+        return stack;
+    }
+
+    public StackPane makeWinScreen() {
+        Rectangle winRec = new Rectangle(0,0,340, 340);
+        winRec.setFill(Color.LIGHTYELLOW);
+        winRec.setOpacity(0.3);
+        Text t = new Text("You Win!");
+        t.setFont(Font.font ("Calibri", FontWeight.BOLD, 60));
+        t.setFill(Color.web("#776e65"));
+        StackPane stack = new StackPane();
+        stack.getChildren().addAll(winRec, t);
+        return stack;
     }
 
 }
