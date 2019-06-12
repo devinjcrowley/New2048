@@ -49,11 +49,12 @@ public class Test4 extends Application {
         text.setFont(Font.font("Calibri", FontWeight.BOLD, 80));
         text.setFill(Color.web("#776e65"));
 
-        Text score = new Text("Score");
-        score.setFont(Font.font("Calibri", 30));
-        score.setFill(Color.web("#eee4da"));
+        Text scoreTitle = new Text("Score");
+        scoreTitle.setFont(Font.font("Calibri", 30));
+        scoreTitle.setFill(Color.web("#eee4da"));
 
         Text scoreText = new Text("0");
+        int score = 0;
         scoreText.setFont(Font.font("Calibri", 30));
         scoreText.setFill(Color.web("#ffffff"));
 
@@ -64,7 +65,7 @@ public class Test4 extends Application {
 
         scorePane.setPrefHeight(70);
         scorePane.setPrefWidth(75);
-        scorePane.getChildren().add(score);
+        scorePane.getChildren().add(scoreTitle);
         scorePane.getChildren().add(scoreText);
         scorePane.setAlignment(Pos.CENTER);
         scorePane.setStyle("-fx-background-color: #bbada0; -fx-background-radius: 10;");
@@ -182,6 +183,7 @@ public class Test4 extends Application {
                                             board.add(makeRectangle(), i, row);
                                             board.add(makeS4(), i, row);
                                             a[row][i] = makeS4();
+                                            scoreText.setText((Integer.toString(score)));
                                             a[row][c] = null;
                                             break;
                                         }
